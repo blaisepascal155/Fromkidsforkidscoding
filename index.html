@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Kids For Kids Coding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 Kids Code Lab</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#learn" class="nav-link">Learn</a></li>
+                <li><a href="#challenges" class="nav-link">Challenges</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Kids Code Lab! 👨‍💻👩‍💻</h1>
+            <p>Learn coding in a fun, interactive way!</p>
+            <button class="btn btn-primary" onclick="document.getElementById('learn').scrollIntoView({behavior: 'smooth'})">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Learning Paths Section -->
+    <section id="learn" class="learning-section">
+        <h2>What Do You Want to Learn?</h2>
+        <div class="cards-container">
+            <div class="card card-blue">
+                <div class="card-icon">🎨</div>
+                <h3>Web Design</h3>
+                <p>Learn HTML, CSS & JavaScript to build amazing websites!</p>
+                <button class="btn btn-small" onclick="toggleContent('web-tutorial')">Explore</button>
+            </div>
+            
+            <div class="card card-green">
+                <div class="card-icon">🎮</div>
+                <h3>Game Development</h3>
+                <p>Create your own games with JavaScript and Phaser!</p>
+                <button class="btn btn-small" onclick="toggleContent('game-tutorial')">Explore</button>
+            </div>
+            
+            <div class="card card-purple">
+                <div class="card-icon">🤖</div>
+                <h3>Python Basics</h3>
+                <p>Start your coding journey with Python!</p>
+                <button class="btn btn-small" onclick="toggleContent('python-tutorial')">Explore</button>
+            </div>
+        </div>
+
+        <!-- Tutorial Content -->
+        <div id="web-tutorial" class="tutorial-content hidden">
+            <h3>🎨 Web Design Tutorial</h3>
+            <p><strong>Lesson 1: HTML Basics</strong></p>
+            <p>HTML is like the skeleton of a website. It creates the structure!</p>
+            <code>&lt;h1&gt;Hello World!&lt;/h1&gt;</code>
+            <p>Try changing the text between the tags! ✨</p>
+        </div>
+
+        <div id="game-tutorial" class="tutorial-content hidden">
+            <h3>🎮 Game Development Tutorial</h3>
+            <p><strong>Lesson 1: Game Loop</strong></p>
+            <p>Games work by constantly updating and drawing. This creates animation!</p>
+            <code>function gameLoop() {
+  updateGame();
+  drawGame();
+}</code>
+        </div>
+
+        <div id="python-tutorial" class="tutorial-content hidden">
+            <h3>🤖 Python Basics Tutorial</h3>
+            <p><strong>Lesson 1: Your First Program</strong></p>
+            <p>Let's start with printing text:</p>
+            <code>print("Hello, World!")</code>
+            <p>This tells Python to display text on the screen!</p>
+        </div>
+    </section>
+
+    <!-- Challenges Section -->
+    <section id="challenges" class="challenges-section">
+        <h2>Code Challenges! 💪</h2>
+        <div class="challenge-container">
+            <div class="challenge">
+                <h3>Challenge 1: Guess the Number</h3>
+                <p>I'm thinking of a number between 1 and 10. Can you guess it?</p>
+                <input type="number" id="guessInput" min="1" max="10" placeholder="Enter your guess">
+                <button class="btn btn-small" onclick="checkGuess()">Submit Guess</button>
+                <p id="guessResult"></p>
+            </div>
+
+            <div class="challenge">
+                <h3>Challenge 2: Color Name Game</h3>
+                <p>What color is this box?</p>
+                <div id="colorBox" class="color-box"></div>
+                <input type="text" id="colorInput" placeholder="Enter color name">
+                <button class="btn btn-small" onclick="checkColor()">Check Answer</button>
+                <p id="colorResult"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <h2>About Us 💡</h2>
+        <div class="about-content">
+            <p>Welcome to <strong>From Kids For Kids Coding</strong>!</p>
+            <p>This platform is designed to make learning to code fun, engaging, and accessible for young learners. We believe everyone can learn to code, and we're here to help!</p>
+            <div class="features">
+                <div class="feature">✅ Interactive Lessons</div>
+                <div class="feature">✅ Fun Challenges</div>
+                <div class="feature">✅ Kid-Friendly Content</div>
+                <div class="feature">✅ Learn at Your Pace</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kids Code Lab. Made by kids, for kids! 🎉</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
