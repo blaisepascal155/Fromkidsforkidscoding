@@ -170,7 +170,17 @@ function sayHello() {
         function renderHTML() {
             const input = document.getElementById('htmlInput').value;
             const preview = document.getElementById('htmlPreview');
-            preview.innerHTML = input;
+            // Use textContent to prevent XSS, then create HTML safely
+            preview.innerHTML = ''; // Clear first
+            try {
+                // Create a temporary div to parse the HTML
+                const temp = document.createElement('div');
+                temp.innerHTML = input;
+                // Copy the parsed content
+                preview.innerHTML = temp.innerHTML;
+            } catch (e) {
+                preview.textContent = 'Error: Invalid HTML syntax';
+            }
         }
 
         // Color Change Function

@@ -278,6 +278,12 @@ print(f"Once upon a time, {name} met a {animal}...")
             const output = document.getElementById('mathOutput');
             
             let result;
+            if (op === '/' && num2 === 0) {
+                output.textContent = '>>> ' + num1 + ' ' + op + ' ' + num2 + '\nError: Cannot divide by zero!';
+                output.style.display = 'block';
+                return;
+            }
+            
             switch(op) {
                 case '+': result = num1 + num2; break;
                 case '-': result = num1 - num2; break;
