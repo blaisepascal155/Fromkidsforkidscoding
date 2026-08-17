@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Basics - Kids Code Lab</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 Kids Code Lab</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="web-design.html" class="nav-link">Web Design</a></li>
+                <li><a href="game-development.html" class="nav-link">Game Development</a></li>
+                <li><a href="python-basics.html" class="nav-link">Python Basics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+        <div class="hero-content">
+            <h1>🤖 Python Basics</h1>
+            <p>Start your coding journey with one of the easiest programming languages!</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="lesson-section">
+        <div class="lesson-container">
+            <!-- Lesson 1 -->
+            <div class="lesson">
+                <h2>Lesson 1: Your First Program</h2>
+                <div class="lesson-content">
+                    <h3>Hello, Python! 👋</h3>
+                    <p>Let's start with the most basic Python program - printing text!</p>
+
+                    <h4>Your First Line of Code:</h4>
+                    <div class="code-block">
+print("Hello, World!")
+                    </div>
+
+                    <p>When you run this, Python displays: <strong>Hello, World!</strong></p>
+
+                    <h4>What is print()?</h4>
+                    <p><code>print()</code> is a function that displays text on the screen. Think of it like Python saying something out loud!</p>
+
+                    <h4>Try Different Messages:</h4>
+                    <div class="interactive-box">
+                        <label>What would you like Python to print?</label>
+                        <input type="text" id="printInput" placeholder="Enter your message" value="Hello, World!">
+                        <button class="btn btn-primary" onclick="simulatePrint()">Run Print</button>
+                        <div id="printOutput" class="code-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 2 -->
+            <div class="lesson">
+                <h2>Lesson 2: Variables & Data Types</h2>
+                <div class="lesson-content">
+                    <h3>Storing Information</h3>
+                    <p>Variables are like containers that hold information. You can store numbers, text, and more!</p>
+
+                    <h4>Creating Variables:</h4>
+                    <div class="code-block">
+name = "Alex"
+age = 12
+height = 5.5
+
+print(name)  # Prints: Alex
+print(age)   # Prints: 12
+                    </div>
+
+                    <h4>Data Types:</h4>
+                    <ul class="tag-list">
+                        <li><strong>String (text):</strong> <code>"Hello"</code> or <code>'Python'</code></li>
+                        <li><strong>Integer (whole number):</strong> <code>5</code>, <code>100</code>, <code>-10</code></li>
+                        <li><strong>Float (decimal):</strong> <code>3.14</code>, <code>2.5</code>, <code>-7.2</code></li>
+                        <li><strong>Boolean (true/false):</strong> <code>True</code> or <code>False</code></li>
+                    </ul>
+
+                    <h4>Create Your Own Variables:</h4>
+                    <div class="interactive-box">
+                        <label>Your Name:</label>
+                        <input type="text" id="varName" placeholder="Enter your name">
+                        <label>Your Age:</label>
+                        <input type="number" id="varAge" placeholder="Enter your age">
+                        <button class="btn btn-primary" onclick="displayVariables()">Create Variables</button>
+                        <div id="varOutput" class="code-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 3 -->
+            <div class="lesson">
+                <h2>Lesson 3: Math & Operations</h2>
+                <div class="lesson-content">
+                    <h3>Python Can Do Math!</h3>
+                    <p>Use Python to perform calculations. It's like having a super-smart calculator!</p>
+
+                    <h4>Basic Math Operations:</h4>
+                    <ul class="tag-list">
+                        <li><code>5 + 3</code> → 8 (Addition)</li>
+                        <li><code>10 - 4</code> → 6 (Subtraction)</li>
+                        <li><code>6 * 7</code> → 42 (Multiplication)</li>
+                        <li><code>20 / 4</code> → 5 (Division)</li>
+                        <li><code>2 ** 3</code> → 8 (Power/Exponent)</li>
+                        <li><code>17 % 5</code> → 2 (Remainder)</li>
+                    </ul>
+
+                    <h4>Math Example:</h4>
+                    <div class="code-block">
+price = 25
+quantity = 3
+total = price * quantity
+print(total)  # Prints: 75
+                    </div>
+
+                    <h4>Calculator Game:</h4>
+                    <div class="interactive-box">
+                        <label>First Number:</label>
+                        <input type="number" id="num1" placeholder="Enter first number" value="10">
+                        <label>Operation:</label>
+                        <select id="operation">
+                            <option value="+">+ (Addition)</option>
+                            <option value="-">- (Subtraction)</option>
+                            <option value="*">× (Multiplication)</option>
+                            <option value="/">÷ (Division)</option>
+                        </select>
+                        <label>Second Number:</label>
+                        <input type="number" id="num2" placeholder="Enter second number" value="5">
+                        <button class="btn btn-primary" onclick="doMath()">Calculate</button>
+                        <div id="mathOutput" class="code-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 4 -->
+            <div class="lesson">
+                <h2>Lesson 4: If Statements (Decisions)</h2>
+                <div class="lesson-content">
+                    <h3>Making Decisions in Your Code</h3>
+                    <p>If statements let your program make decisions based on conditions!</p>
+
+                    <h4>Basic If Statement:</h4>
+                    <div class="code-block">
+age = 13
+
+if age >= 13:
+    print("You're a teenager!")
+else:
+    print("You're not a teenager yet.")
+                    </div>
+
+                    <h4>Comparison Operators:</h4>
+                    <ul class="tag-list">
+                        <li><code>==</code> equals</li>
+                        <li><code>!=</code> not equals</li>
+                        <li><code>&gt;</code> greater than</li>
+                        <li><code>&lt;</code> less than</li>
+                        <li><code>&gt;=</code> greater than or equal</li>
+                        <li><code>&lt;=</code> less than or equal</li>
+                    </ul>
+
+                    <h4>Decision Game:</h4>
+                    <div class="interactive-box">
+                        <label>Guess a number between 1-10:</label>
+                        <input type="number" id="secretGuess" min="1" max="10" placeholder="Your guess">
+                        <button class="btn btn-primary" onclick="pythonIfDemo()">Check Guess</button>
+                        <div id="ifOutput" class="code-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 5 -->
+            <div class="lesson">
+                <h2>Lesson 5: Loops (Repetition)</h2>
+                <div class="lesson-content">
+                    <h3>Doing Things Over and Over</h3>
+                    <p>Loops let you repeat code without writing it many times!</p>
+
+                    <h4>For Loop Example:</h4>
+                    <div class="code-block">
+for i in range(5):
+    print(i)
+# Prints: 0, 1, 2, 3, 4
+                    </div>
+
+                    <h4>While Loop Example:</h4>
+                    <div class="code-block">
+count = 0
+while count < 3:
+    print("Count:", count)
+    count = count + 1
+                    </div>
+
+                    <h4>Loop Playground:</h4>
+                    <div class="interactive-box">
+                        <label>How many times to repeat?</label>
+                        <input type="number" id="loopCount" min="1" max="20" value="5" placeholder="1-20">
+                        <button class="btn btn-primary" onclick="pythonLoopDemo()">Run Loop</button>
+                        <div id="loopOutput" class="code-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge -->
+            <div class="lesson challenge-lesson">
+                <h2>Challenge: Python Story Generator</h2>
+                <div class="lesson-content">
+                    <p>Create a program that asks questions and uses the answers to tell a unique story!</p>
+                    <h4>Example:</h4>
+                    <div class="code-block">
+name = input("What's your name? ")
+animal = input("What's your favorite animal? ")
+print(f"Once upon a time, {name} met a {animal}...")
+                    </div>
+                    <h4>Your Turn:</h4>
+                    <div class="interactive-box">
+                        <label>What's your name?</label>
+                        <input type="text" id="storyName" placeholder="Your name">
+                        <label>Favorite animal?</label>
+                        <input type="text" id="storyAnimal" placeholder="Animal name">
+                        <label>A superpower?</label>
+                        <input type="text" id="storyPower" placeholder="Superpower">
+                        <button class="btn btn-primary" onclick="generateStory()">Generate Story</button>
+                        <div id="storyOutput" class="code-output" style="margin-top: 1rem; padding: 1rem; background: #FFF3CD; border-radius: 5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Home -->
+    <section class="back-section">
+        <a href="index.html" class="btn btn-primary">← Back to Home</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kids Code Lab. Made by kids, for kids! 🎉</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Simulate Python print
+        function simulatePrint() {
+            const input = document.getElementById('printInput').value || 'Hello, World!';
+            const output = document.getElementById('printOutput');
+            output.textContent = '>>> ' + input;
+            output.style.display = 'block';
+        }
+
+        // Display variables
+        function displayVariables() {
+            const name = document.getElementById('varName').value || 'John';
+            const age = document.getElementById('varAge').value || '10';
+            const output = document.getElementById('varOutput');
+            
+            let text = `name = "${name}"\n`;
+            text += `age = ${age}\n\n`;
+            text += `>>> print(name)\n${name}\n`;
+            text += `>>> print(age)\n${age}`;
+            
+            output.textContent = text;
+            output.style.display = 'block';
+        }
+
+        // Math operations
+        function doMath() {
+            const num1 = parseFloat(document.getElementById('num1').value) || 0;
+            const num2 = parseFloat(document.getElementById('num2').value) || 0;
+            const op = document.getElementById('operation').value;
+            const output = document.getElementById('mathOutput');
+            
+            let result;
+            switch(op) {
+                case '+': result = num1 + num2; break;
+                case '-': result = num1 - num2; break;
+                case '*': result = num1 * num2; break;
+                case '/': result = num1 / num2; break;
+            }
+            
+            let text = `>>> ${num1} ${op} ${num2}\n`;
+            text += `${result}`;
+            
+            output.textContent = text;
+            output.style.display = 'block';
+        }
+
+        // If statement demo
+        function pythonIfDemo() {
+            const guess = parseInt(document.getElementById('secretGuess').value);
+            const output = document.getElementById('ifOutput');
+            
+            const secret = Math.floor(Math.random() * 10) + 1;
+            let text = `secret = ${secret}\nguess = ${guess}\n\n`;
+            text += `if guess == secret:\n    print("You guessed it!")`;
+            
+            output.textContent = text;
+            if (guess === secret) {
+                output.textContent += `\nYou guessed it! 🎉`;
+            } else if (guess < secret) {
+                output.textContent += `\nToo low! Try higher.`;
+            } else {
+                output.textContent += `\nToo high! Try lower.`;
+            }
+            output.style.display = 'block';
+        }
+
+        // Loop demo
+        function pythonLoopDemo() {
+            const count = parseInt(document.getElementById('loopCount').value) || 5;
+            const output = document.getElementById('loopOutput');
+            
+            let text = `for i in range(${count}):\n    print(i)\n\n`;
+            text += 'Output:\n';
+            for (let i = 0; i < count; i++) {
+                text += i + '\n';
+            }
+            
+            output.textContent = text;
+            output.style.display = 'block';
+        }
+
+        // Story generator
+        function generateStory() {
+            const name = document.getElementById('storyName').value || 'Alex';
+            const animal = document.getElementById('storyAnimal').value || 'dragon';
+            const power = document.getElementById('storyPower').value || 'flying';
+            const output = document.getElementById('storyOutput');
+            
+            let story = `📖 The Adventure of ${name}\n\n`;
+            story += `Once upon a time, ${name} was walking through an enchanted forest when they met a magical ${animal}. `;
+            story += `The ${animal} had the amazing power of ${power}! Together, they embarked on an incredible adventure. `;
+            story += `${name} and their ${animal} friend faced many challenges, but with their magical abilities, `;
+            story += `they saved the kingdom and became legendary heroes!\n\n`;
+            story += `THE END 🎉`;
+            
+            output.textContent = story;
+            output.style.display = 'block';
+        }
+
+        // Style for code output
+        const style = document.createElement('style');
+        style.textContent = `
+            .code-output {
+                background: #333;
+                color: #4ECDC4;
+                padding: 1rem;
+                border-radius: 5px;
+                font-family: 'Courier New', monospace;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                display: none;
+                margin-top: 1rem;
+                font-size: 0.9rem;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Development - Kids Code Lab</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 Kids Code Lab</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="web-design.html" class="nav-link">Web Design</a></li>
+                <li><a href="game-development.html" class="nav-link">Game Development</a></li>
+                <li><a href="python-basics.html" class="nav-link">Python Basics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+        <div class="hero-content">
+            <h1>🎮 Game Development</h1>
+            <p>Learn to create your own interactive games!</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="lesson-section">
+        <div class="lesson-container">
+            <!-- Lesson 1 -->
+            <div class="lesson">
+                <h2>Lesson 1: Game Loop Basics</h2>
+                <div class="lesson-content">
+                    <h3>What is a Game Loop?</h3>
+                    <p>Every game has a loop that keeps running! It updates the game and draws everything on screen, over and over, very fast!</p>
+
+                    <h4>The Basic Game Loop:</h4>
+                    <div class="code-block">
+function gameLoop() {
+  updateGame();    // Update positions, check collisions
+  drawGame();      // Draw everything on screen
+  requestAnimationFrame(gameLoop);
+}
+                    </div>
+
+                    <h4>Why It Matters:</h4>
+                    <ul class="tag-list">
+                        <li>🔄 Runs ~60 times per second</li>
+                        <li>🎯 Creates the illusion of movement</li>
+                        <li>🕹️ Checks for player input (keyboard, mouse)</li>
+                        <li>💥 Handles collisions and game events</li>
+                    </ul>
+
+                    <h4>Simple Animation Example:</h4>
+                    <div class="interactive-box">
+                        <canvas id="gameCanvas1" width="400" height="200" style="border: 2px solid #667eea; background: #f0f0f0;"></canvas>
+                        <button class="btn btn-primary" onclick="startBasicAnimation()">Start Animation</button>
+                        <button class="btn btn-small" onclick="stopAnimation()">Stop</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 2 -->
+            <div class="lesson">
+                <h2>Lesson 2: Player Movement</h2>
+                <div class="lesson-content">
+                    <h3>Making Things Move!</h3>
+                    <p>To move objects, we change their position a little bit each frame. This creates smooth movement!</p>
+
+                    <h4>Movement Code:</h4>
+                    <div class="code-block">
+let playerX = 50;
+
+function update() {
+  if (keys.ArrowRight) playerX += 5;
+  if (keys.ArrowLeft) playerX -= 5;
+}
+                    </div>
+
+                    <h4>Try Moving a Square:</h4>
+                    <div class="interactive-box">
+                        <p>Use <strong>Arrow Keys</strong> or <strong>WASD</strong> to move the blue square!</p>
+                        <canvas id="gameCanvas2" width="400" height="250" style="border: 2px solid #667eea; background: #f0f0f0;"></canvas>
+                        <button class="btn btn-primary" onclick="startPlayerGame()">Start Game</button>
+                        <button class="btn btn-small" onclick="stopAnimation()">Stop</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 3 -->
+            <div class="lesson">
+                <h2>Lesson 3: Collision Detection</h2>
+                <div class="lesson-content">
+                    <h3>Detecting When Objects Touch</h3>
+                    <p>In games, we need to know when objects collide! This is used for collecting items, taking damage, and more!</p>
+
+                    <h4>Simple Collision Check:</h4>
+                    <div class="code-block">
+function checkCollision(obj1, obj2) {
+  return obj1.x &lt; obj2.x + obj2.width &amp;&amp;
+         obj1.x + obj1.width &gt; obj2.x &amp;&amp;
+         obj1.y &lt; obj2.y + obj2.height &amp;&amp;
+         obj1.y + obj1.height &gt; obj2.y;
+}
+                    </div>
+
+                    <h4>Collision Game:</h4>
+                    <p>Move the blue square to touch all the green squares!</p>
+                    <div class="interactive-box">
+                        <canvas id="gameCanvas3" width="400" height="250" style="border: 2px solid #667eea; background: #f0f0f0;"></canvas>
+                        <button class="btn btn-primary" onclick="startCollisionGame()">Start Game</button>
+                        <button class="btn btn-small" onclick="stopAnimation()">Stop</button>
+                        <p id="collisionScore"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 4 -->
+            <div class="lesson">
+                <h2>Lesson 4: Game States</h2>
+                <div class="lesson-content">
+                    <h3>Menu, Playing, Game Over!</h3>
+                    <p>Games have different states: Start Menu, Playing, Paused, and Game Over. We control what happens in each state!</p>
+
+                    <h4>Game States Example:</h4>
+                    <div class="code-block">
+let gameState = "menu"; // Can be "menu", "playing", "gameOver"
+
+if (gameState === "menu") {
+  drawMenu();
+} else if (gameState === "playing") {
+  updateGame();
+  drawGame();
+} else if (gameState === "gameOver") {
+  drawGameOver();
+}
+                    </div>
+
+                    <h4>State Diagram:</h4>
+                    <div style="background: #f9f9f9; padding: 20px; border-radius: 10px; text-align: center;">
+                        <p>Menu → Playing → Game Over → Menu</p>
+                        <p style="color: #667eea; margin-top: 10px;">↓ ↑</p>
+                        <p>Pause (while playing)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenge -->
+            <div class="lesson challenge-lesson">
+                <h2>Challenge: Design Your Game!</h2>
+                <div class="lesson-content">
+                    <p>Now it's time to design your own game! Don't code it yet - just plan it out!</p>
+                    <h4>Answer These Questions:</h4>
+                    <ul class="tag-list">
+                        <li>❓ What's the goal of your game?</li>
+                        <li>❓ What does the player control?</li>
+                        <li>❓ What obstacles or enemies are there?</li>
+                        <li>❓ How do you win or lose?</li>
+                        <li>❓ What sounds or music would fit?</li>
+                    </ul>
+                    <p style="margin-top: 1rem; padding: 1rem; background: #E8F4FF; border-radius: 5px;">
+                        💡 <strong>Hint:</strong> Start simple! Classic games like Pong, Snake, or Flappy Bird are great starting points!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Home -->
+    <section class="back-section">
+        <a href="index.html" class="btn btn-primary">← Back to Home</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kids Code Lab. Made by kids, for kids! 🎉</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        let animationId = null;
+
+        function stopAnimation() {
+            if (animationId) cancelAnimationFrame(animationId);
+        }
+
+        // Basic Animation
+        function startBasicAnimation() {
+            const canvas = document.getElementById('gameCanvas1');
+            const ctx = canvas.getContext('2d');
+            let x = 0;
+
+            function animate() {
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#667eea';
+                ctx.fillRect(x, 80, 40, 40);
+                
+                x += 3;
+                if (x > canvas.width) x = -40;
+                
+                animationId = requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // Player Movement Game
+        let keys = {};
+        window.addEventListener('keydown', (e) => { keys[e.key] = true; });
+        window.addEventListener('keyup', (e) => { keys[e.key] = false; });
+
+        function startPlayerGame() {
+            const canvas = document.getElementById('gameCanvas2');
+            const ctx = canvas.getContext('2d');
+            let playerX = 175;
+            let playerY = 200;
+
+            function update() {
+                if (keys['ArrowRight'] || keys['d']) playerX += 5;
+                if (keys['ArrowLeft'] || keys['a']) playerX -= 5;
+                if (keys['ArrowUp'] || keys['w']) playerY -= 5;
+                if (keys['ArrowDown'] || keys['s']) playerY += 5;
+
+                // Keep in bounds
+                playerX = Math.max(0, Math.min(playerX, canvas.width - 50));
+                playerY = Math.max(0, Math.min(playerY, canvas.height - 50));
+            }
+
+            function draw() {
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#667eea';
+                ctx.fillRect(playerX, playerY, 50, 50);
+            }
+
+            function gameLoop() {
+                update();
+                draw();
+                animationId = requestAnimationFrame(gameLoop);
+            }
+            gameLoop();
+        }
+
+        // Collision Game
+        function startCollisionGame() {
+            const canvas = document.getElementById('gameCanvas3');
+            const ctx = canvas.getContext('2d');
+            let playerX = 175;
+            let playerY = 200;
+            let score = 0;
+            let items = [
+                { x: 50, y: 50, width: 30, height: 30 },
+                { x: 320, y: 50, width: 30, height: 30 },
+                { x: 185, y: 30, width: 30, height: 30 }
+            ];
+
+            function checkCollision(obj1, obj2) {
+                return obj1.x < obj2.x + obj2.width &&
+                       obj1.x + 50 > obj2.x &&
+                       obj1.y < obj2.y + obj2.height &&
+                       obj1.y + 50 > obj2.y;
+            }
+
+            function update() {
+                if (keys['ArrowRight'] || keys['d']) playerX += 5;
+                if (keys['ArrowLeft'] || keys['a']) playerX -= 5;
+                if (keys['ArrowUp'] || keys['w']) playerY -= 5;
+                if (keys['ArrowDown'] || keys['s']) playerY += 5;
+
+                playerX = Math.max(0, Math.min(playerX, canvas.width - 50));
+                playerY = Math.max(0, Math.min(playerY, canvas.height - 50));
+
+                items.forEach((item, index) => {
+                    if (checkCollision({x: playerX, y: playerY}, item)) {
+                        items.splice(index, 1);
+                        score++;
+                        document.getElementById('collisionScore').textContent = '✅ Collected: ' + score;
+                    }
+                });
+            }
+
+            function draw() {
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#667eea';
+                ctx.fillRect(playerX, playerY, 50, 50);
+
+                ctx.fillStyle = '#4ECDC4';
+                items.forEach(item => {
+                    ctx.fillRect(item.x, item.y, item.width, item.height);
+                });
+            }
+
+            function gameLoop() {
+                update();
+                draw();
+                animationId = requestAnimationFrame(gameLoop);
+            }
+            gameLoop();
+        }
+    </script>
+</body>
+</html>

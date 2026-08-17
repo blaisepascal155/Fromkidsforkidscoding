@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Design - Kids Code Lab</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 Kids Code Lab</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="web-design.html" class="nav-link">Web Design</a></li>
+                <li><a href="game-development.html" class="nav-link">Game Development</a></li>
+                <li><a href="python-basics.html" class="nav-link">Python Basics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="hero-content">
+            <h1>🎨 Web Design</h1>
+            <p>Learn to build beautiful websites with HTML, CSS & JavaScript!</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="lesson-section">
+        <div class="lesson-container">
+            <!-- Lesson 1 -->
+            <div class="lesson">
+                <h2>Lesson 1: HTML Basics</h2>
+                <div class="lesson-content">
+                    <h3>What is HTML?</h3>
+                    <p>HTML stands for <strong>HyperText Markup Language</strong>. It's like the skeleton of a website - it creates the structure and content!</p>
+                    
+                    <h4>Your First HTML Tag:</h4>
+                    <div class="code-block">
+&lt;h1&gt;Hello World!&lt;/h1&gt;
+                    </div>
+                    <p>This creates a big heading that says "Hello World!"</p>
+
+                    <h4>Common HTML Tags:</h4>
+                    <ul class="tag-list">
+                        <li><code>&lt;h1&gt;...&lt;/h1&gt;</code> - Main heading (biggest)</li>
+                        <li><code>&lt;h2&gt;...&lt;/h2&gt;</code> - Subheading</li>
+                        <li><code>&lt;p&gt;...&lt;/p&gt;</code> - Paragraph of text</li>
+                        <li><code>&lt;img src="..."&gt;</code> - Display an image</li>
+                        <li><code>&lt;a href="..."&gt;Link&lt;/a&gt;</code> - Create a link</li>
+                        <li><code>&lt;button&gt;Click Me&lt;/button&gt;</code> - Create a button</li>
+                    </ul>
+
+                    <h4>Try It Out:</h4>
+                    <div class="interactive-box">
+                        <textarea id="htmlInput" placeholder="Write your HTML here..." rows="5">&lt;h1&gt;My First Website&lt;/h1&gt;
+&lt;p&gt;This is my website!&lt;/p&gt;</textarea>
+                        <button class="btn btn-primary" onclick="renderHTML()">Preview</button>
+                        <div id="htmlPreview" class="preview-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 2 -->
+            <div class="lesson">
+                <h2>Lesson 2: CSS Styling</h2>
+                <div class="lesson-content">
+                    <h3>What is CSS?</h3>
+                    <p>CSS stands for <strong>Cascading Style Sheets</strong>. It makes websites look beautiful by adding colors, fonts, and layouts!</p>
+
+                    <h4>Basic CSS Properties:</h4>
+                    <ul class="tag-list">
+                        <li><code>color: red;</code> - Change text color</li>
+                        <li><code>background-color: blue;</code> - Change background color</li>
+                        <li><code>font-size: 20px;</code> - Make text bigger or smaller</li>
+                        <li><code>border: 2px solid black;</code> - Add a border</li>
+                        <li><code>padding: 10px;</code> - Add space inside an element</li>
+                        <li><code>margin: 10px;</code> - Add space outside an element</li>
+                    </ul>
+
+                    <h4>Example CSS:</h4>
+                    <div class="code-block">
+h1 {
+  color: purple;
+  font-size: 48px;
+  text-align: center;
+}
+                    </div>
+
+                    <h4>Color Playground:</h4>
+                    <div class="interactive-box">
+                        <label>Choose a color for the text:</label>
+                        <input type="color" id="textColor" value="#667eea">
+                        <button class="btn btn-primary" onclick="changeTextColor()">Apply Color</button>
+                        <p id="colorDemo" style="font-size: 24px; padding: 20px; border-radius: 10px; background: #f0f0f0;">
+                            Look how my color changes!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson 3 -->
+            <div class="lesson">
+                <h2>Lesson 3: JavaScript Interactivity</h2>
+                <div class="lesson-content">
+                    <h3>What is JavaScript?</h3>
+                    <p>JavaScript is what makes websites interactive! It allows you to respond to user clicks, create animations, and more!</p>
+
+                    <h4>Basic JavaScript:</h4>
+                    <div class="code-block">
+function sayHello() {
+  alert("Hello, World!");
+}
+                    </div>
+
+                    <h4>Try It Out:</h4>
+                    <div class="interactive-box">
+                        <label>Enter your name:</label>
+                        <input type="text" id="userName" placeholder="Your name here">
+                        <button class="btn btn-primary" onclick="greetUser()">Say Hello!</button>
+                    </div>
+
+                    <h4>What Makes JavaScript Awesome:</h4>
+                    <ul class="tag-list">
+                        <li>✅ Respond to clicks and typing</li>
+                        <li>✅ Create smooth animations</li>
+                        <li>✅ Store information (variables)</li>
+                        <li>✅ Make games and interactive apps</li>
+                        <li>✅ Validate forms before sending data</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Challenge -->
+            <div class="lesson challenge-lesson">
+                <h2>Challenge: Build Your Own Page!</h2>
+                <div class="lesson-content">
+                    <p>Now that you've learned HTML, CSS, and JavaScript, try to create a simple page!</p>
+                    <h4>Requirements:</h4>
+                    <ul class="tag-list">
+                        <li>✏️ Use at least 2 headings</li>
+                        <li>✏️ Add 3 paragraphs of text</li>
+                        <li>✏️ Style it with at least 3 different colors</li>
+                        <li>✏️ Add one interactive button</li>
+                    </ul>
+                    <p style="margin-top: 1rem; padding: 1rem; background: #FFF3CD; border-radius: 5px;">
+                        💡 <strong>Hint:</strong> Look at the source code of this page (right-click → View Page Source) to see how it's made!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Home -->
+    <section class="back-section">
+        <a href="index.html" class="btn btn-primary">← Back to Home</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kids Code Lab. Made by kids, for kids! 🎉</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // HTML Preview Function
+        function renderHTML() {
+            const input = document.getElementById('htmlInput').value;
+            const preview = document.getElementById('htmlPreview');
+            preview.innerHTML = input;
+        }
+
+        // Color Change Function
+        function changeTextColor() {
+            const color = document.getElementById('textColor').value;
+            document.getElementById('colorDemo').style.color = color;
+        }
+
+        // Greet User Function
+        function greetUser() {
+            const name = document.getElementById('userName').value;
+            if (name.trim() === '') {
+                alert('Please enter your name!');
+            } else {
+                alert('Hello, ' + name + '! Welcome to web design! 🎉');
+            }
+        }
+
+        // Render preview on page load
+        window.addEventListener('load', function() {
+            renderHTML();
+        });
+    </script>
+</body>
+</html>
