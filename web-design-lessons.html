@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Design - 100 Lessons - Kids Code Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .lessons-container { display: flex; gap: 2rem; }
+        .lessons-sidebar { width: 250px; background: #f0f0f0; padding: 1rem; border-radius: 10px; max-height: 80vh; overflow-y: auto; }
+        .lessons-content { flex: 1; }
+        .lesson-item { padding: 0.5rem; margin: 0.3rem 0; background: white; border-radius: 5px; cursor: pointer; border-left: 3px solid #667eea; }
+        .lesson-item:hover { background: #e8f4ff; }
+        .lesson-item.active { background: #667eea; color: white; }
+        .lessons-wrapper { display: none; }
+        .lessons-wrapper.active { display: block; animation: fadeIn 0.3s; }
+        @media (max-width: 768px) { .lessons-container { flex-direction: column; } .lessons-sidebar { max-height: 300px; width: 100%; } }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 Kids Code Lab</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="web-design.html" class="nav-link">Quick Start</a></li>
+                <li><a href="web-design-lessons.html" class="nav-link">All Lessons</a></li>
+                <li><a href="game-development.html" class="nav-link">Games</a></li>
+                <li><a href="python-basics.html" class="nav-link">Python</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="hero-content">
+            <h1>🎨 Web Design - 100 Lessons</h1>
+            <p>Master HTML, CSS, and JavaScript with comprehensive lessons!</p>
+        </div>
+    </section>
+
+    <!-- Lessons Section -->
+    <section class="lesson-section">
+        <div class="lessons-container">
+            <!-- Sidebar with lesson list -->
+            <div class="lessons-sidebar">
+                <h3>📚 Lessons</h3>
+                <input type="text" id="lessonSearch" placeholder="Search lessons..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;">
+                <div id="lessonsList"></div>
+            </div>
+
+            <!-- Main content area -->
+            <div class="lessons-content">
+                <div id="lessonsContent"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Home -->
+    <section class="back-section">
+        <a href="index.html" class="btn btn-primary">← Back to Home</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kids Code Lab. Made by kids, for kids! 🎉</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const webDesignLessons = [
+            { num: 1, title: "What is the Web?", content: "The web is a system of interconnected documents and resources. HTML creates the structure, CSS makes it look beautiful, and JavaScript makes it interactive. Together, these three technologies form the foundation of everything you see in your browser!" },
+            { num: 2, title: "HTML Basics", content: "HTML (HyperText Markup Language) is like the skeleton of a website. It uses tags like <h1>, <p>, and <div> to structure content. Every website starts with HTML, which tells the browser what content to display and how to organize it." },
+            { num: 3, title: "Tags and Elements", content: "HTML tags are commands wrapped in angle brackets like <tag>. Most tags come in pairs: an opening tag and a closing tag. For example, <p>Hello</p> creates a paragraph. Elements are made up of tags and the content between them." },
+            { num: 4, title: "Headings and Text", content: "Headings use <h1> through <h6> tags, with <h1> being the largest. <p> tags create paragraphs, <strong> makes text bold, and <em> makes text italic. These basic text elements help organize and emphasize your content." },
+            { num: 5, title: "Lists", content: "Lists organize information clearly. Unordered lists <ul> show items with bullets, while ordered lists <ol> show numbered items. Each item uses the <li> tag. Lists are perfect for making your content easy to read and understand." },
+            { num: 6, title: "CHALLENGE: Create Your First Webpage", content: "Create an HTML page with: a heading, a paragraph about yourself, a list of your favorite things, bold and italic text. Use what you've learned about HTML tags to structure your content properly!", isChallenge: true },
+            { num: 7, title: "Links", content: "The <a> tag creates hyperlinks. Use <a href='url'>Link Text</a> to create clickable links. Links are the glue that holds the web together, connecting different pages and resources. You can link to external websites or other pages on your site." },
+            { num: 8, title: "Images", content: "The <img> tag displays images with <img src='path/to/image.jpg' alt='description'>. The src tells where the image is, and alt provides text for when images can't load. Images make websites more engaging and visually interesting." },
+            { num: 9, title: "Buttons and Forms", content: "Buttons use the <button> tag and can trigger actions when clicked. Forms use the <form> tag to collect user input with elements like <input>, <textarea>, and <select>. Forms are how websites gather information from users." },
+            { num: 10, title: "Semantic HTML", content: "Semantic tags describe their meaning to both the browser and developer. <header>, <nav>, <main>, <article>, and <footer> make code more readable and help search engines understand your page better than using only <div> tags." },
+            { num: 11, title: "CHALLENGE: Build a Contact Form", content: "Create an HTML form with fields for name, email, message. Add a submit button and organize it with proper semantic elements like <form> and labels. Make it look organized and user-friendly!", isChallenge: true },
+            { num: 12, title: "Introduction to CSS", content: "CSS (Cascading Style Sheets) adds styling and visual design to HTML. While HTML is the structure, CSS controls colors, fonts, spacing, layout, and animations. CSS uses selectors to target HTML elements and apply style rules to them." },
+            { num: 13, title: "CSS Selectors", content: "Selectors target HTML elements to style. Element selectors (h1) target all h1 tags, class selectors (.classname) target elements with that class, and ID selectors (#idname) target specific elements. Understanding selectors is crucial for CSS." },
+            { num: 14, title: "Colors in CSS", content: "CSS supports colors in multiple formats: named colors (red, blue), hex codes (#FF0000), RGB (rgb(255,0,0)), and HSL (hsl(0,100%,50%)). Different formats are useful in different situations, but they all represent the same color values." },
+            { num: 15, title: "Fonts and Text Styling", content: "Font-family sets the typeface, font-size controls size, font-weight controls boldness, and text-align positions text. Letter-spacing, line-height, and text-transform give you fine control over typography and readability." },
+            { num: 16, title: "CHALLENGE: Style a Webpage", content: "Take your HTML page and add CSS to: change background colors, style headings, adjust font sizes, add text decorations, and change text alignment. Experiment with different color schemes and fonts!", isChallenge: true },
+            { num: 17, title: "The Box Model", content: "The box model describes how elements are sized: content (inner), padding (inside border), border (edge), and margin (outside). Understanding the box model is essential for layout and positioning elements correctly on your page." },
+            { num: 18, title: "Padding and Margins", content: "Padding creates space inside an element around the content, while margin creates space outside the element. You can set all sides at once (padding: 10px) or individually (padding-top, padding-right, etc.). Proper spacing makes designs look professional." },
+            { num: 19, title: "Borders and Backgrounds", content: "Border property adds edges around elements with style, width, and color. Background-color fills the background, and background-image adds a picture. Backgrounds can be solid colors, gradients, or images for stunning visual effects." },
+            { num: 20, title: "Flexbox Basics", content: "Flexbox is a powerful layout system that arranges items in rows or columns. Set display: flex on a container, then use justify-content and align-items to position children. Flexbox is intuitive and perfect for responsive layouts." },
+            { num: 21, title: "CHALLENGE: Create a Card Layout", content: "Create cards with images, titles, and descriptions. Use flexbox to arrange them in rows. Style them with borders, shadows, and hover effects. Make them look professional and responsive!", isChallenge: true },
+            { num: 22, title: "Flexbox Properties", content: "flex-direction controls row or column layout, flex-wrap allows wrapping, and flex controls item sizing. Gap adds spacing between items. These properties give you complete control over flexible, responsive layouts that adapt to any screen size." },
+            { num: 23, title: "Grid Layout", content: "CSS Grid is a 2D layout system for complex designs. Define columns and rows, then place items in the grid. Grid is powerful for creating sophisticated layouts with less code and better control than older methods." },
+            { num: 24, title: "Positioning Elements", content: "Position property has values: static (default), relative (offset from normal), absolute (removed from flow), and fixed (stays on screen). Z-index controls stacking order. Positioning gives precise control over element placement." },
+            { num: 25, title: "Floats and Clears", content: "Float removes elements from normal flow, making text wrap around them. Clear prevents floating behavior on specific sides. While mostly replaced by flexbox and grid, floats are useful for image placement within text." },
+            { num: 26, title: "CHALLENGE: Build a Multi-Column Layout", content: "Create a webpage with a header, sidebar, main content area, and footer using either flexbox or grid. Make it responsive so it stacks on mobile devices. Style each section distinctly!", isChallenge: true },
+            { num: 27, title: "Hover Effects", content: ":hover is a pseudo-class that applies styles when you mouse over an element. Use it for buttons, links, and cards to provide visual feedback. Transitions make hover effects smooth and polished." },
+            { num: 28, title: "Transitions and Animations", content: "Transition smoothly changes CSS properties over time. Animation applies a named sequence of styles. Both create dynamic, engaging effects that enhance user experience without being distracting." },
+            { num: 29, title: "Transform Effects", content: "Transform properties rotate, scale, skew, and translate elements. These don't affect layout flow, making them perfect for hover effects and animations. Combine with transitions for smooth, performant effects." },
+            { num: 30, title: "Shadows and Effects", content: "Box-shadow adds depth with shadows around elements. Text-shadow adds shadows to text. Filter property applies visual effects like blur, brightness, and sepia. These effects add polish to your designs." },
+            { num: 31, title: "CHALLENGE: Create Interactive Buttons", content: "Design buttons with hover states, click animations, and transitions. Create different button styles: primary, secondary, danger. Add icons or emojis. Make them feel responsive and satisfying to click!", isChallenge: true },
+            { num: 32, title: "Responsive Design Basics", content: "Responsive design adapts to different screen sizes. Use viewport meta tag, flexible layouts, and media queries. Starting mobile-first creates better experiences for all users." },
+            { num: 33, title: "Media Queries", content: "@media queries apply different styles at different screen sizes. Use max-width for mobile-first or min-width for desktop-first. Common breakpoints are 480px (mobile), 768px (tablet), and 1024px (desktop)." },
+            { num: 34, title: "Mobile First Design", content: "Mobile-first approach designs for small screens first, then adds features for larger screens. This ensures your site works everywhere and improves performance. Most users browse on mobile devices anyway!" },
+            { num: 35, title: "Viewport and Scaling", content: "The viewport meta tag tells browsers how to scale your page. Mobile devices have different viewport sizes, so responsive units like percentages, em, and rem adapt better than fixed pixels." },
+            { num: 36, title: "CHALLENGE: Make a Responsive Site", content: "Create a website that looks good on mobile (320px), tablet (768px), and desktop (1024px). Use media queries to adjust layout, font sizes, and spacing for each screen size. Test on different devices!", isChallenge: true },
+            { num: 37, title: "Introduction to JavaScript", content: "JavaScript makes websites interactive! It runs in browsers and responds to user actions. Variables store data, functions perform actions, and events trigger code when users click, type, or scroll." },
+            { num: 38, title: "Variables and Data Types", content: "Variables store information using let, const, or var. Data types include strings ('text'), numbers (42), booleans (true/false), arrays ([1,2,3]), and objects ({name: 'John'}). Understanding data types is fundamental to programming." },
+            { num: 39, title: "Functions", content: "Functions are reusable blocks of code. Define with function name() {}, call with name(). Functions can take parameters and return values. Good functions are small, focused, and do one thing well." },
+            { num: 40, title: "Events and Listeners", content: "Events happen when users interact: click, hover, scroll, type. addEventListener() attaches code to events. When an event fires, your function runs. Events are how JavaScript responds to users." },
+            { num: 41, title: "CHALLENGE: Interactive Form Validation", content: "Create a form that validates as users type. Check for empty fields, valid email, and strong passwords. Provide real-time feedback with colors and messages. Show success when all fields are valid!", isChallenge: true },
+            { num: 42, title: "DOM Manipulation", content: "The DOM (Document Object Model) is the structure of your webpage. JavaScript can find elements with querySelector, change content with textContent, modify styles, add/remove elements, and more. This is how JavaScript changes pages dynamically." },
+            { num: 43, title: "Selecting Elements", content: "querySelector selects the first matching element, querySelectorAll selects all matches. getElementById, getElementsByClassName, and getElementsByTagName are older methods. CSS selectors work with querySelector." },
+            { num: 44, title: "Changing Content", content: "textContent changes plain text, innerHTML changes HTML (be careful with user input!), and value gets/sets input field values. setAttribute and removeAttribute modify HTML attributes. These methods let you dynamically update your page." },
+            { num: 45, title: "Adding and Removing Elements", content: "createElement creates new elements, appendChild adds them to the page, removeChild deletes elements. innerHTML can also add/remove, but createElement is safer and more explicit. Dynamic content makes sites feel alive." },
+            { num: 46, title: "CHALLENGE: Build a Todo List", content: "Create a todo app where users can add, complete, and delete tasks. Use JavaScript to dynamically add items to a list. Store data so items persist (use local storage). Make it fully functional!", isChallenge: true },
+            { num: 47, title: "Arrays and Loops", content: "Arrays store multiple values in order: [1,2,3]. Loops repeat code: for loops, while loops, forEach. Map, filter, and reduce transform arrays. Arrays power dynamic data handling in modern web apps." },
+            { num: 48, title: "Objects and Data", content: "Objects store related data: {name: 'John', age: 25}. Access properties with dot notation (obj.name) or bracket notation (obj['name']). Objects are fundamental for organizing complex data." },
+            { num: 49, title: "Local Storage", content: "Local storage persists data across page refreshes using localStorage.setItem() and getItem(). Data stays until cleared. Session storage clears when the browser closes. Both are key for saving user preferences and data." },
+            { num: 50, title: "Debugging JavaScript", content: "console.log() prints values to see what's happening. Browser DevTools let you inspect elements, see errors, and set breakpoints. Debugging is an essential skill that saves hours of frustration." },
+            { num: 51, title: "CHALLENGE: Create a Shopping Cart", content: "Build a shopping cart that stores items in local storage. Users can add items, view total price, remove items. Data persists when they refresh. Add a checkout button that shows a confirmation!", isChallenge: true },
+            { num: 52, title: "Conditionals and Logic", content: "if/else makes decisions: if (condition) { action }. Comparison operators: ==, ===, !=, <, >, <=, >=. Logical operators: && (and), || (or), ! (not). Logic powers decision-making in programs." },
+            { num: 53, title: "Switch Statements", content: "Switch statements handle multiple conditions cleanly: switch (value) { case 1: ... break; }. Better than many if/else statements when checking one value against many options. Break prevents fall-through." },
+            { num: 54, title: "Try and Catch", content: "Try/catch handles errors gracefully: try { code } catch (error) { handle }. This prevents crashes and lets you respond to problems. Finally block runs regardless. Error handling is crucial for robust code." },
+            { num: 55, title: "Arrow Functions", content: "Arrow functions are concise: const add = (a, b) => a + b; One-liners don't need braces. Arrow functions are perfect for callbacks and array methods. They're modern and widely used." },
+            { num: 56, title: "CHALLENGE: Build a Quiz Game", content: "Create a quiz where users answer multiple choice questions. Track their score. Show feedback for correct/incorrect answers. Display final score and offer to retake. Make it fun and engaging!", isChallenge: true },
+            { num: 57, title: "Template Literals", content: "Template literals use backticks and ${} for interpolation: `Hello ${name}`. They span multiple lines and are cleaner than string concatenation. Essential for modern JavaScript." },
+            { num: 58, title: "Spread Operator", content: "Spread operator (...) expands arrays or objects: [...array, newItem] or {...obj, newProp}. It's essential for copying, merging, and spreading values. Fundamental to modern JavaScript." },
+            { num: 59, title: "Destructuring", content: "Destructuring extracts values from arrays and objects: const {name, age} = person; const [first, ...rest] = array; It's cleaner than accessing properties individually." },
+            { num: 60, title: "Promises and Async", content: "Promises handle asynchronous operations: fetch data, wait for results. Async/await makes promises easier to read: async function() { const data = await fetch(url); }. Essential for modern web development." },
+            { num: 61, title: "CHALLENGE: Weather App", content: "Create an app that fetches weather data from an API. Display current temperature, conditions, and forecast. Handle errors gracefully. Make it visually appealing with weather-appropriate styling!", isChallenge: true },
+            { num: 62, title: "APIs and Fetch", content: "APIs let you get data from other websites. fetch(url) retrieves data, .json() parses it, .then() handles success, .catch() handles errors. APIs power dynamic content in modern websites." },
+            { num: 63, title: "JSON Format", content: "JSON (JavaScript Object Notation) is the standard for data exchange. It's lightweight, readable, and works with every programming language. APIs return JSON data that you parse with .json()." },
+            { num: 64, title: "Working with Images", content: "JavaScript can dynamically load images, swap sources on hover, create galleries, and filter collections. Image.onload triggers when images load. Image manipulation makes visual experiences more dynamic." },
+            { num: 65, title: "Playing Audio and Video", content: "<audio> and <video> tags with JavaScript control let you play media with custom controls. Events like play, pause, ended let you respond to playback. Media makes content richer and more engaging." },
+            { num: 66, title: "CHALLENGE: Build an Image Gallery", content: "Create a gallery with thumbnail images. Click thumbnails to show full-size image. Add prev/next buttons to navigate. Implement lightbox effect or smooth transitions. Make it look professional!", isChallenge: true },
+            { num: 67, title: "Canvas Drawing", content: "<canvas> lets you draw graphics with JavaScript. getContext('2d') gives drawing tools: fillRect, strokeRect, arc, fillText. Canvas powers games, charts, and creative graphics." },
+            { num: 68, title: "SVG Graphics", content: "SVG (Scalable Vector Graphics) creates vector images with XML. Circles, rectangles, paths, text are all scalable. JavaScript can animate and interact with SVG elements. Better than canvas for precise graphics." },
+            { num: 69, title: "Keyboard Input", content: "Listen for keydown and keyup events to detect when users press keys. keyCode or key properties identify which key. Games and apps use keyboard input extensively." },
+            { num: 70, title: "Mouse Input", content: "Mouse events: click, dblclick, mousedown, mouseup, mousemove, mouseenter, mouseleave. clientX and clientY give cursor position. Mouse input enables dragging, drawing, and interactive experiences." },
+            { num: 71, title: "CHALLENGE: Build a Paint App", content: "Create a simple drawing app using canvas. Users can draw by dragging the mouse. Add color picker, brush size selector, and clear canvas button. Save the drawing! Make it intuitive.", isChallenge: true },
+            { num: 72, title: "Regular Expressions", content: "Regular expressions (regex) match patterns in text: /pattern/. Test(), match(), and replace() find and manipulate text. Email and password validation often use regex. Powerful but complex." },
+            { num: 73, title: "String Methods", content: "Strings have powerful methods: split(), join(), slice(), substring(), indexOf(), includes(), toUpperCase(), toLowerCase(), trim(), replace(). Master these to manipulate text effectively." },
+            { num: 74, title: "Date and Time", content: "Date object handles dates: new Date() creates current time. Get year, month, day, hours, minutes, seconds. Useful for timestamps, countdowns, and age calculations. JavaScript dates can be tricky!" },
+            { num: 75, title: "Math Operations", content: "Math object has methods: Math.random(), Math.floor(), Math.ceil(), Math.round(), Math.pow(), Math.sqrt(). Also constants like Math.PI and Math.E. Essential for calculations and games." },
+            { num: 76, title: "CHALLENGE: Build a Countdown Timer", content: "Create a timer that counts down from a specified time. Add start, stop, reset buttons. Display in MM:SS format. Play a sound or show a notification when time runs out!", isChallenge: true },
+            { num: 77, title: "Modules and Imports", content: "Modern JavaScript uses modules to organize code: export functions/classes, import them elsewhere. Keeps code organized, reusable, and maintainable. Essential for larger projects." },
+            { num: 78, title: "Classes and Objects", content: "Classes organize related data and functions. Constructor initializes properties, methods are functions. Inheritance extends classes. Classes make code more organized and maintainable." },
+            { num: 79, title: "Closures", content: "Closures happen when functions access variables from their parent scope. They're powerful for creating private variables and maintaining state. Understanding closures is key to advanced JavaScript." },
+            { num: 80, title: "Callbacks", content: "Callbacks are functions passed to other functions. They execute later, often after async operations complete. Event listeners use callbacks. Understanding callbacks prepares you for promises." },
+            { num: 81, title: "CHALLENGE: Build a Note-Taking App", content: "Create an app to add, edit, delete, and save notes. Store notes in local storage. Add categories/tags. Implement search. Make it a fully functional note-taking tool!", isChallenge: true },
+            { num: 82, title: "Performance Optimization", content: "Minimize file sizes, lazy load images, cache data, use efficient selectors, avoid excessive DOM manipulation. Performance matters for user experience and SEO. Profile and optimize when needed." },
+            { num: 83, title: "Accessibility Basics", content: "Accessibility makes sites usable for everyone: semantic HTML, alt text for images, keyboard navigation, sufficient contrast, screen reader support. It's not optional—everyone deserves access!" },
+            { num: 84, title: "SEO Fundamentals", content: "Search engines need: proper HTML structure, unique titles and descriptions, good headings, fast pages, mobile compatibility, quality content. SEO brings visitors to your site organically." },
+            { num: 85, title: "Security Basics", content: "Protect user data: validate input, escape output, use HTTPS, avoid trusting user data, sanitize HTML. Never trust the client. Security breaches have serious consequences." },
+            { num: 86, title: "CHALLENGE: Build a Secure Contact Form", content: "Create a contact form with proper validation and sanitization. Prevent common attacks. Store submissions safely. Send confirmation emails. Make security a feature, not an afterthought!", isChallenge: true },
+            { num: 87, title: "Web Components", content: "Web Components let you create reusable custom elements. Shadow DOM encapsulates styles, slots insert content. They're the future of component-based web development." },
+            { num: 88, title: "Progressive Web Apps", content: "PWAs work offline using service workers and caching. They install like apps but run in browsers. Push notifications keep users engaged. PWAs are the future of web apps." },
+            { num: 89, title: "Version Control with Git", content: "Git tracks code changes: git init creates a repo, git add/commit save changes, git branch creates versions. GitHub is where developers share code. Version control is essential for professional development." },
+            { num: 90, title: "Deployment and Hosting", content: "Deploy websites with services like Netlify, Vercel, or GitHub Pages. Choose hosting that fits your needs. Once deployed, your site is available to the world 24/7." },
+            { num: 91, title: "CHALLENGE: Deploy Your First Site", content: "Take one of your projects and deploy it to the web. Choose a free hosting service. Get a real URL. Share it with friends and family. Celebrate going live!", isChallenge: true },
+            { num: 92, title: "Advanced CSS: SASS/SCSS", content: "SASS adds variables, functions, and nesting to CSS. Write cleaner, more maintainable styles. SCSS is the newer syntax. SASS makes large stylesheets manageable." },
+            { num: 93, title: "CSS Frameworks: Bootstrap", content: "Bootstrap provides pre-made components, grid system, and utilities. Build consistent interfaces faster. Trade flexibility for speed. Great for learning and rapid development." },
+            { num: 94, title: "CSS Frameworks: Tailwind", content: "Tailwind uses utility classes for styling: class='flex justify-center'. Highly customizable and lightweight. Different approach than component frameworks but very powerful." },
+            { num: 95, title: "JavaScript Frameworks: React", content: "React manages dynamic UIs with components and state. Virtual DOM makes updates efficient. JSX mixes HTML and JavaScript. React is the most popular framework for good reason." },
+            { num: 96, title: "JavaScript Frameworks: Vue", content: "Vue is simpler than React but powerful. Template syntax is intuitive, state management is clean. Vue is a great next step after vanilla JavaScript. Growing in popularity." },
+            { num: 97, title: "CHALLENGE: Learn a Framework", content: "Choose React, Vue, or another framework. Build a small project with it. Compare it to vanilla JavaScript. Understand its advantages and tradeoffs. Level up your skills!", isChallenge: true },
+            { num: 98, title: "Web Development Best Practices", content: "Write clean code: use meaningful names, keep functions small, add comments. Follow conventions: use consistent indentation, follow style guides. Good practices make collaboration easier." },
+            { num: 99, title: "Your Web Development Journey", content: "You've learned HTML, CSS, and JavaScript fundamentals. Practice by building projects. Read others' code. Participate in communities. Keep learning—web development evolves constantly!" },
+            { num: 100, title: "FINAL CHALLENGE: Build Your Portfolio", content: "Create a portfolio website showcasing all your projects. Include about section, project gallery, contact form, and blog. Make it responsive and visually stunning. This is your professional online presence!", isChallenge: true }
+        ];
+
+        let currentLesson = 1;
+
+        function initLessons() {
+            renderLessonList();
+            loadLesson(1);
+        }
+
+        function renderLessonList() {
+            const list = document.getElementById('lessonsList');
+            list.innerHTML = webDesignLessons.map(lesson => 
+                `<div class="lesson-item ${lesson.num === currentLesson ? 'active' : ''} ${lesson.isChallenge ? 'challenge-lesson' : ''}" 
+                      onclick="loadLesson(${lesson.num})" style="padding-left: 1rem;">
+                    ${lesson.isChallenge ? '⭐' : '📖'} Lesson ${lesson.num}
+                </div>`
+            ).join('');
+        }
+
+        function loadLesson(num) {
+            currentLesson = num;
+            const lesson = webDesignLessons[num - 1];
+            const content = document.getElementById('lessonsContent');
+            
+            content.innerHTML = `
+                <div class="lesson">
+                    <h2>${lesson.isChallenge ? '⭐ CHALLENGE: ' : '📖 Lesson '}${lesson.num}: ${lesson.title}</h2>
+                    <div class="lesson-content">
+                        <p>${lesson.content}</p>
+                        ${lesson.isChallenge ? `
+                            <div style="margin-top: 2rem; padding: 1.5rem; background: #FFF3CD; border-radius: 10px; border-left: 4px solid #FFB84D;">
+                                <h4 style="color: #FF9800; margin-top: 0;">⭐ Challenge Time!</h4>
+                                <p>${lesson.content}</p>
+                                <button class="btn btn-primary" onclick="alert('Share your completed challenge with the community! Upload to GitHub or your portfolio.')">Mark Complete</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: space-between;">
+                        ${num > 1 ? `<button class="btn btn-small" onclick="loadLesson(${num - 1})">← Previous</button>` : '<div></div>'}
+                        <span style="align-self: center;">Lesson ${num} of ${webDesignLessons.length}</span>
+                        ${num < webDesignLessons.length ? `<button class="btn btn-small" onclick="loadLesson(${num + 1})">Next →</button>` : '<div></div>'}
+                    </div>
+                </div>
+            `;
+
+            renderLessonList();
+            document.querySelector('.lessons-sidebar').scrollTop = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', initLessons);
+    </script>
+</body>
+</html>

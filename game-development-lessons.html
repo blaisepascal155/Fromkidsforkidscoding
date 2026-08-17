@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Development - 100 Lessons - Kids Code Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .lessons-container { display: flex; gap: 2rem; }
+        .lessons-sidebar { width: 250px; background: #f0f0f0; padding: 1rem; border-radius: 10px; max-height: 80vh; overflow-y: auto; }
+        .lessons-content { flex: 1; }
+        .lesson-item { padding: 0.5rem; margin: 0.3rem 0; background: white; border-radius: 5px; cursor: pointer; border-left: 3px solid #667eea; }
+        .lesson-item:hover { background: #e8f4ff; }
+        .lesson-item.active { background: #667eea; color: white; }
+        .lessons-wrapper { display: none; }
+        .lessons-wrapper.active { display: block; animation: fadeIn 0.3s; }
+        @media (max-width: 768px) { .lessons-container { flex-direction: column; } .lessons-sidebar { max-height: 300px; width: 100%; } }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 Kids Code Lab</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="game-development.html" class="nav-link">Quick Start</a></li>
+                <li><a href="game-development-lessons.html" class="nav-link">All Lessons</a></li>
+                <li><a href="web-design.html" class="nav-link">Web Design</a></li>
+                <li><a href="python-basics.html" class="nav-link">Python</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+        <div class="hero-content">
+            <h1>🎮 Game Development - 100 Lessons</h1>
+            <p>Create amazing games with JavaScript!</p>
+        </div>
+    </section>
+
+    <!-- Lessons Section -->
+    <section class="lesson-section">
+        <div class="lessons-container">
+            <!-- Sidebar with lesson list -->
+            <div class="lessons-sidebar">
+                <h3>📚 Lessons</h3>
+                <input type="text" id="lessonSearch" placeholder="Search lessons..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;">
+                <div id="lessonsList"></div>
+            </div>
+
+            <!-- Main content area -->
+            <div class="lessons-content">
+                <div id="lessonsContent"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Home -->
+    <section class="back-section">
+        <a href="index.html" class="btn btn-primary">← Back to Home</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kids Code Lab. Made by kids, for kids! 🎉</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const gameLessons = [
+            { num: 1, title: "What is Game Development?", content: "Game development is the art and science of creating interactive entertainment. Games combine graphics, sound, input, AI, and gameplay mechanics. Developers decide the rules, objectives, and player experience. Every game starts as an idea!" },
+            { num: 2, title: "Game Genres", content: "Games come in many types: action, adventure, puzzle, strategy, RPG, sports, simulation, and more. Each genre has its own mechanics, pacing, and player expectations. Understanding genres helps you design better games." },
+            { num: 3, title: "Game Loop", content: "The game loop is the heartbeat of every game: update (process input and logic), render (draw screen), repeat. Runs 60+ times per second. Without the loop, nothing happens. It's the most fundamental concept in game development." },
+            { num: 4, title: "Canvas Fundamentals", content: "<canvas> is where you draw in JavaScript. getContext('2d') gives you a drawing context with methods: fillRect, fillCircle, strokeLine, fillText. Canvas is your blank canvas for creating graphics." },
+            { num: 5, title: "Coordinates and Grid", content: "Canvas has coordinates: (0,0) is top-left, x goes right, y goes down. Think of it as a grid where each pixel has a position. Understanding coordinates is essential for positioning anything on screen." },
+            { num: 6, title: "CHALLENGE: Draw a Scene", content: "Draw a simple scene on canvas: a house, landscape, or abstract art. Use shapes (rectangles, circles), lines, and text. Experiment with colors and positioning. Make it colorful and creative!", isChallenge: true },
+            { num: 7, title: "Shapes and Graphics", content: "Draw rectangles, circles, triangles with canvas methods. fillStyle and strokeStyle set colors. lineWidth controls thickness. mastering shapes is the foundation for all graphics in games." },
+            { num: 8, title: "Colors and Opacity", content: "Colors: hex (#FF0000), rgb (255,0,0), rgba (255,0,0,0.5). The last value in rgba is opacity (0-1). Transparency creates depth and visual interest. Color choices affect game feel." },
+            { num: 9, title: "Images and Sprites", content: "Sprites are 2D images for game objects. Load with new Image(), draw with drawImage(). Sprites are how you add characters, enemies, backgrounds. Collections of sprites are called sprite sheets." },
+            { num: 10, title: "Animation Basics", content: "Animation shows different frames in sequence to create motion. Simple flip-book style: draw frame 1, then frame 2, etc, quickly. Smoother than static images. Frame rate and timing matter." },
+            { num: 11, title: "CHALLENGE: Animate a Sprite", content: "Load a sprite image and animate it walking, jumping, or rotating. Change the image based on time to create movement. Make it loop smoothly. Get the timing right!", isChallenge: true },
+            { num: 12, title: "Keyboard Input Handling", content: "Listen for keydown and keyup events. Track which keys are pressed in an object. Update player position based on pressed keys. Keyboard input is the most common game control." },
+            { num: 13, title: "Mouse Input", content: "Track mouse position with mousemove. Click with mousedown/mouseup/click. Games can respond to mouse for aiming, clicking UI buttons, or dragging objects. Mouse input enables many game types." },
+            { num: 14, title: "Joystick and Gamepad", content: "Gamepad API reads controller input. Check buttons and analog sticks. Modern games support gamepads for better control. Implementing gamepad support makes games more accessible." },
+            { num: 15, title: "Player Movement", content: "Store player x, y position. Update based on input: if keys[ArrowRight] playerX += speed. Constrain to screen bounds. Smooth movement is more engaging than teleporting." },
+            { num: 16, title: "CHALLENGE: Build a Playable Character", content: "Create a character that moves with arrow keys and stays on screen. Add animations when moving. Add idle animation when standing still. Make controls feel responsive and smooth!", isChallenge: true },
+            { num: 17, title: "Velocity and Acceleration", content: "Velocity is speed and direction. Change position each frame: x += vx. Acceleration changes velocity: vx += ax. Physics-based movement feels more natural than instant acceleration." },
+            { num: 18, title: "Jumping and Gravity", content: "Gravity pulls downward: vy += gravity. Jump by setting vy to negative value. Check ground collision to allow jumping. Jumping mechanics feel right when gravity is tuned perfectly." },
+            { num: 19, title: "Collision Detection", content: "Axis-aligned bounding box (AABB): obj1.x < obj2.x + obj2.width && obj1.x + obj1.width > obj2.x && similar for y. Simple, fast, and works for most games. Understanding collision is crucial." },
+            { num: 20, title: "Collision Response", content: "When objects collide, respond: blocks push player back, pickups give points, enemies hurt player. Different collisions need different responses. This is where game feel is created." },
+            { num: 21, title: "CHALLENGE: Collision Game Mechanics", content: "Create enemies or obstacles that collide with the player. Implement collision response: player bounces back or takes damage. Add items to collect. Make the game feel solid and responsive!", isChallenge: true },
+            { num: 22, title: "Enemy AI Basics", content: "Enemies need simple behavior: patrol left/right, chase player when close, chase when player is visible. Update enemy positions in game loop. Good AI makes games challenging and fun." },
+            { num: 23, title: "Pathfinding", content: "Advanced AI finds optimal paths around obstacles. A* algorithm is popular but complex. For simple games, chase logic or waypoints work great. AI difficulty affects game challenge." },
+            { num: 24, title: "Health and Life Systems", content: "Track health points. Decrease on damage, increase on healing. Game over when health reaches zero. Lives let players continue after death. Balance difficulty by tweaking health values." },
+            { num: 25, title: "Scoring System", content: "Score tracks player performance. Award points for actions: enemies defeated, items collected, puzzles solved. Leaderboards show top scores. Scoring motivates players to improve." },
+            { num: 26, title: "CHALLENGE: Add Enemies and Scoring", content: "Add enemies that patrol or chase the player. Implement scoring when defeating enemies. Show current score on screen. Add a game over screen with final score!", isChallenge: true },
+            { num: 27, title: "Game States", content: "Games have states: menu, playing, paused, game over. Only allow certain actions in each state. State machine controls flow. Proper states make games feel polished." },
+            { num: 28, title: "Main Menu", content: "Start with a menu showing title, play button, settings, credits. Menu is the first impression. Make it attractive and easy to navigate. Good menus respect player time." },
+            { num: 29, title: "Pause Menu", content: "Pause the game without exiting. Show options: resume, settings, quit. Pause is essential for accessibility and respect. Players appreciate being able to pause anytime." },
+            { num: 30, title: "Game Over Screen", content: "When player dies, show game over screen. Display final score, time, achievements. Options: try again, back to menu, change difficulty. Graceful endings respect player effort." },
+            { num: 31, title: "CHALLENGE: Add Game States", content: "Implement menu, playing, pause, and game over states. Each state has proper UI and options. Smooth transitions between states. Make menus navigable and responsive!", isChallenge: true },
+            { num: 32, title: "Sound Effects", content: "Audio makes games come alive. <audio> tag or Web Audio API plays sounds. Play sounds on actions: jump, shoot, collect, die. Sound design is often overlooked but hugely impactful." },
+            { num: 33, title: "Background Music", content: "Looping background music sets mood and energy. Music makes games feel complete. Fade out when pausing, fade in when resuming. Good music enhances immersion." },
+            { num: 34, title: "Text and UI", content: "Draw text with canvas or use HTML elements. Display score, health, messages. UI should be clear and unobtrusive. Good UI guides players without getting in the way." },
+            { num: 35, title: "Particle Effects", content: "Particle effects show explosions, item pickups, fire, rain. Spawn many small objects, animate them. Particles add visual polish and feedback. They're very satisfying." },
+            { num: 36, title: "CHALLENGE: Add Polish and Feedback", content: "Add sound effects for actions, background music, particle effects for collisions. Display score and health prominently. Add visual feedback for every player action!", isChallenge: true },
+            { num: 37, title: "Projectiles", content: "Bullets, fireballs, arrows are projectiles. Store in array, update position each frame, remove when off-screen. Projectiles add action to games. Shooting feels powerful." },
+            { num: 38, title: "Weapon Systems", content: "Different weapons: pistol (single shot), machine gun (rapid fire), shotgun (spread), rocket (explosive). Ammo and cooldowns prevent overpowered. Weapon balance is crucial to game design." },
+            { num: 39, title: "Power-ups", content: "Collectible items that enhance player: health kits, shields, ammo, temporary invincibility. Power-ups add strategy and excitement. Design them to encourage exploration." },
+            { num: 40, title: "Upgrades and Progression", content: "Upgrades improve player abilities: faster speed, higher jump, stronger weapon. Progression motivates continued play. Upgrades make players feel more powerful over time." },
+            { num: 41, title: "CHALLENGE: Add Weapons and Power-ups", content: "Implement a weapon that fires projectiles. Add power-ups scattered in the game. Upgrade player abilities when power-ups are collected. Make combat feel satisfying!", isChallenge: true },
+            { num: 42, title: "Levels and Progression", content: "Games have multiple levels with increasing difficulty. Level data: enemies, obstacles, pickups, goals. Each level should be distinct and teach something new. Progression keeps games fresh." },
+            { num: 43, title: "Procedural Generation", content: "Randomly generate levels for infinite variety. Randomize enemy positions, obstacles, items. Algorithms ensure playable levels. Procedural generation makes games replayable." },
+            { num: 44, title: "Boss Battles", content: "Boss battles are climactic challenges with unique mechanics. Bosses are harder and more interesting than normal enemies. Boss design tests all player skills learned so far." },
+            { num: 45, title: "Achievements and Badges", content: "Achievements reward specific accomplishments: beat level without taking damage, collect all items, defeat enemy with minimal ammo. They motivate replay and mastery." },
+            { num: 46, title: "CHALLENGE: Build a Multi-Level Game", content: "Create at least 3 levels with increasing difficulty. Implement level progression. Each level has unique layout and challenges. Show which level player is on and display victory screen!", isChallenge: true },
+            { num: 47, title: "Tile-Based Games", content: "Tile maps divide worlds into grid cells. Each cell is one tile. Efficient for storage and rendering. Many classic games use tile-based design: Pac-Man, Mario, Zelda." },
+            { num: 48, title: "Platform Game Mechanics", content: "Player jumps between platforms. Gravity and collision are crucial. Platforms can be static or moving. Timing and precision matter. Platform games teach core mechanics." },
+            { num: 49, title: "Puzzle Game Design", content: "Puzzles challenge thinking, not reflexes. A-ha moments are rewarding. Gradually increase difficulty: teach concept, then make it harder. Good puzzles make players think." },
+            { num: 50, title: "Stealth Mechanics", content: "Avoid detection by enemies. Hide in shadows, move quietly, avoid sight lines. Stealth games reward patience and planning. Stealth adds strategic depth." },
+            { num: 51, title: "CHALLENGE: Build a Complete Game", content: "Create a simple but complete game: menu, multiple levels, enemies, scoring, sound. Polish it so it's fun to play. This is your first real game project!", isChallenge: true },
+            { num: 52, title: "Perspective Types", content: "Top-down view looks from above. Side-view shows the side. First-person is player's eyes. Isometric combines top-down and side views. Perspective affects gameplay." },
+            { num: 53, title: "Camera Systems", content: "Camera follows player or focuses on action area. Smooth camera movement feels better than instant. Cameras show more world than just player. Proper framing matters." },
+            { num: 54, title: "Parallax Scrolling", content: "Background moves slower than foreground creating depth illusion. Multiple layers at different speeds. Parallax makes simple 2D games feel more immersive." },
+            { num: 55, title: "Isometric Projection", content: "Isometric games show depth without 3D. Combine top-down and side perspectives. Classic games like Diablo use isometric view. Isometric is beautiful and complex to implement." },
+            { num: 56, title: "CHALLENGE: Advanced Graphics", content: "Implement parallax scrolling or isometric view. Add layered backgrounds. Make your game world feel deeper and more interesting visually!", isChallenge: true },
+            { num: 57, title: "Performance Optimization", content: "Profile your game to find slow parts. Use requestAnimationFrame for smooth 60 FPS. Cull off-screen objects, cache calculations, minimize DOM updates. Performance makes games playable." },
+            { num: 58, title: "Memory Management", content: "Prevent memory leaks: remove event listeners, delete unused objects, clear arrays. Memory leaks slow games over time. Good memory practices keep games running smoothly." },
+            { num: 59, title: "Mobile Game Optimization", content: "Mobile has less power than desktop. Use simpler graphics, fewer enemies, less sound. Touch input is different than keyboard. Mobile games need careful optimization." },
+            { num: 60, title: "Multiplayer Basics", content: "Local multiplayer: two players on one device using different keys. Networked multiplayer requires servers and communication. Multiplayer adds complexity but increases engagement." },
+            { num: 61, title: "CHALLENGE: Optimize Your Game", content: "Measure performance with DevTools. Identify bottlenecks. Optimize: reduce draw calls, simplify collisions, lazy load assets. Achieve smooth 60 FPS!", isChallenge: true },
+            { num: 62, title: "Game Feel", content: "Game feel is the responsiveness of controls and feedback. Screen shake on impact, particles on collision, sound effects on every action. Game feel turns good games into great games." },
+            { num: 63, title: "Juice", content: "'Juice' refers to extra polish and feedback. Tweening animations, slight delays, exaggerated reactions. Juice makes games feel alive and satisfying. Budget 20% of dev time for juice." },
+            { num: 64, title: "Difficulty Balancing", content: "Too easy is boring, too hard is frustrating. Sweet spot challenges players just enough. Playtesting finds balance. Good difficulty keeps players engaged." },
+            { num: 65, title: "Pacing", content: "Control game speed and rhythm. Fast sections excite, slow sections let players breathe. Pacing affects engagement. Good pacing feels like a story." },
+            { num: 66, title: "CHALLENGE: Polish Your Game", content: "Add juice: screen shake, particle effects, tweened animations. Improve game feel: responsive controls, satisfying feedback. Make every action feel good!", isChallenge: true },
+            { num: 67, title: "Educational Games", content: "Games teach while entertaining. Combine learning with fun. Educational games use game mechanics to reinforce learning. Learning through play is powerful." },
+            { num: 68, title: "Casual Games", content: "Simple mechanics, quick sessions, easy to learn. Accessible to non-gamers. Casual games like Flappy Bird and 2048 became hits. Simple can be brilliant." },
+            { num: 69, title: "Hyper-casual Games", content: "Extremely simple: one button, one action, high score. Addictive gameplay, shareable. Hyper-casual games are mobile gaming trend. Sometimes less is more." },
+            { num: 70, title: "Roguelike Games", content: "Procedurally generated levels, permanent death, replay-driven. Roguelikes demand mastery. Each run teaches you more. Roguelikes are very rewarding to develop." },
+            { num: 71, title: "CHALLENGE: Design Your Own Game", content: "Invent an original game concept. Write design document: mechanics, story, art style. Sketch out levels. Plan your development. Bring your idea to life!", isChallenge: true },
+            { num: 72, title: "Game Physics Engines", content: "Physics engines handle complex interactions: gravity, friction, collisions. Bullet, Rapier are popular. Simple games can use basic physics, complex games use full engines." },
+            { num: 73, title: "2D vs 3D Games", content: "2D games use 2D graphics and are simpler to develop. 3D games offer more immersion but higher complexity. Both have advantages. Start with 2D to learn basics." },
+            { num: 74, title: "Game Engines: Phaser", content: "Phaser is a JavaScript game framework. It handles rendering, input, physics, animations. Perfect for 2D games. Phaser powers many browser games." },
+            { num: 75, title: "Game Engines: Babylon.js", content: "Babylon.js is a 3D engine for JavaScript. Handles complex 3D graphics. Good for web-based 3D games. More complex than 2D engines." },
+            { num: 76, title: "CHALLENGE: Use a Game Framework", content: "Learn Phaser or Babylon.js basics. Recreate one of your games using the framework. Compare to vanilla JavaScript. Understand framework benefits and overhead!", isChallenge: true },
+            { num: 77, title: "Pixel Art", content: "Pixel art uses small pixel blocks for retro aesthetic. Constraints make art appealing. Tools like Aseprite help. Pixel art is having a renaissance." },
+            { num: 78, title: "Vector Graphics", content: "Vector graphics scale without pixelation. Use math instead of pixels. Tools: Inkscape, Adobe Illustrator. Vectors work great for clean, scalable graphics." },
+            { num: 79, title: "3D Modeling", content: "3D models add realism and depth. Blender is free and powerful. Export models to games. 3D makes games visually impressive." },
+            { num: 80, title: "Animation Tools", content: "Spine, Dragonbones create skeletal animations. Professional tool for smooth character animation. Learn if focusing on polished games." },
+            { num: 81, title: "CHALLENGE: Create Art Assets", content: "Create pixel art sprites or vector graphics for your game. Animate them. Use tools like Aseprite or Piskel. Polish your game's visuals!", isChallenge: true },
+            { num: 82, title: "Game Monetization", content: "Free-to-play with ads, in-app purchases, premium versions. Monetization funds development. Balance monetization and fun. Never let money ruin fun." },
+            { num: 83, title: "Player Retention", content: "Keep players coming back with: new content, daily rewards, challenges, leaderboards. Retention is key to successful games. Long-term player engagement matters." },
+            { num: 84, title: "Analytics", content: "Track player behavior: session length, progression, drop-off points. Analytics reveal what works and what doesn't. Data-driven design improves games." },
+            { num: 85, title: "CHALLENGE: Game Live Service", content: "Plan updates for your game: new levels, cosmetics, challenges. Implement analytics tracking. Create a roadmap for ongoing development!", isChallenge: true },
+            { num: 86, title: "Game Design Document", content: "GDD describes your game: concept, mechanics, story, art style, audio, platforms. Living document that guides development. Professionals use detailed GDDs." },
+            { num: 87, title: "Prototyping", content: "Quick prototypes test ideas fast. Paper prototypes, simple digital versions. Prototyping saves time and money. Fail fast, learn, iterate." },
+            { num: 88, title: "Playtesting", content: "Get feedback from real players. Watch how they play. Listen to what they say. Playtesting finds issues developers miss. External feedback is invaluable." },
+            { num: 89, title: "Game Jams", content: "Game Jams challenge developers to create games in 24-48 hours. Ludum Dare is famous. Jams encourage creativity and speed. Great for learning and networking." },
+            { num: 90, title: "CHALLENGE: Join a Game Jam", content: "Participate in a game jam event. Create a complete game in the time limit. Share your game. Experience rapid game development!", isChallenge: true },
+            { num: 91, title: "Publishing Your Game", content: "Release on itch.io, Newgrounds, app stores. Choose platform that fits your game. Marketing and community engagement matter. Getting your game out there is rewarding." },
+            { num: 92, title: "Community and Feedback", content: "Share games with communities: Reddit, Discord, Twitter. Listen to player feedback gracefully. Community support keeps you motivated. Positive communities make development fun." },
+            { num: 93, title: "Professional Game Development", content: "Studios have designers, programmers, artists, producers. Larger teams make bigger games. Professional development is complex but exciting. Many career paths in games." },
+            { num: 94, title: "Indie Game Success Stories", content: "Stardew Valley, Hollow Knight, Among Us started small. Indies proved great games don't need big budgets. Passion and creativity matter most. Indies are revolutionizing gaming." },
+            { num: 95, title: "CHALLENGE: Indie Game Launch", content: "Finish and polish a game to publishable quality. Create marketing materials. Launch on itch.io or similar. Celebrate your indie game release!", isChallenge: true },
+            { num: 96, title: "VR and Immersive Gaming", content: "VR creates immersive experiences. Requires 3D, special input, motion sickness considerations. AR overlays games on reality. Future of gaming is immersive." },
+            { num: 97, title: "Browser Games Trends", content: "WebGL and modern JavaScript enable impressive browser games. Games without download are convenient. Browser games reach wide audiences. Web is gaming platform now." },
+            { num: 98, title: "AI in Games", content: "Machine learning can generate content, improve AI opponents, personalize gameplay. AI makes games smarter and more adaptive. Future games will use AI extensively." },
+            { num: 99, title: "Your Game Development Journey", content: "You've learned game development fundamentals: loops, graphics, input, physics, design. Practice by making games. Play other games to analyze design. Keep learning and creating!" },
+            { num: 100, title: "FINAL CHALLENGE: Your Magnum Opus", content: "Create your best game yet. Polish it. Make players smile. This is your masterpiece. Share it proudly. You're now a game developer!", isChallenge: true }
+        ];
+
+        let currentLesson = 1;
+
+        function initLessons() {
+            renderLessonList();
+            loadLesson(1);
+        }
+
+        function renderLessonList() {
+            const list = document.getElementById('lessonsList');
+            list.innerHTML = gameLessons.map(lesson => 
+                `<div class="lesson-item ${lesson.num === currentLesson ? 'active' : ''} ${lesson.isChallenge ? 'challenge-lesson' : ''}" 
+                      onclick="loadLesson(${lesson.num})" style="padding-left: 1rem;">
+                    ${lesson.isChallenge ? '⭐' : '🎮'} Lesson ${lesson.num}
+                </div>`
+            ).join('');
+        }
+
+        function loadLesson(num) {
+            currentLesson = num;
+            const lesson = gameLessons[num - 1];
+            const content = document.getElementById('lessonsContent');
+            
+            content.innerHTML = `
+                <div class="lesson">
+                    <h2>${lesson.isChallenge ? '⭐ CHALLENGE: ' : '🎮 Lesson '}${lesson.num}: ${lesson.title}</h2>
+                    <div class="lesson-content">
+                        <p>${lesson.content}</p>
+                        ${lesson.isChallenge ? `
+                            <div style="margin-top: 2rem; padding: 1.5rem; background: #E8F4FF; border-radius: 10px; border-left: 4px solid #4ECDC4;">
+                                <h4 style="color: #0288d1; margin-top: 0;">⭐ Challenge Time!</h4>
+                                <p>${lesson.content}</p>
+                                <button class="btn btn-primary" onclick="alert('Great job! Share your game with the world. Upload to itch.io or GitHub. Every game is a learning experience!')">Mark Complete</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: space-between;">
+                        ${num > 1 ? `<button class="btn btn-small" onclick="loadLesson(${num - 1})">← Previous</button>` : '<div></div>'}
+                        <span style="align-self: center;">Lesson ${num} of ${gameLessons.length}</span>
+                        ${num < gameLessons.length ? `<button class="btn btn-small" onclick="loadLesson(${num + 1})">Next →</button>` : '<div></div>'}
+                    </div>
+                </div>
+            `;
+
+            renderLessonList();
+            document.querySelector('.lessons-sidebar').scrollTop = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', initLessons);
+    </script>
+</body>
+</html>

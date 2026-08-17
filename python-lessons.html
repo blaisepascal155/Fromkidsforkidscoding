@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Basics - 100 Lessons - Kids Code Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .lessons-container { display: flex; gap: 2rem; }
+        .lessons-sidebar { width: 250px; background: #f0f0f0; padding: 1rem; border-radius: 10px; max-height: 80vh; overflow-y: auto; }
+        .lessons-content { flex: 1; }
+        .lesson-item { padding: 0.5rem; margin: 0.3rem 0; background: white; border-radius: 5px; cursor: pointer; border-left: 3px solid #667eea; }
+        .lesson-item:hover { background: #e8f4ff; }
+        .lesson-item.active { background: #667eea; color: white; }
+        .lessons-wrapper { display: none; }
+        .lessons-wrapper.active { display: block; animation: fadeIn 0.3s; }
+        @media (max-width: 768px) { .lessons-container { flex-direction: column; } .lessons-sidebar { max-height: 300px; width: 100%; } }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 Kids Code Lab</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="python-basics.html" class="nav-link">Quick Start</a></li>
+                <li><a href="python-lessons.html" class="nav-link">All Lessons</a></li>
+                <li><a href="web-design.html" class="nav-link">Web Design</a></li>
+                <li><a href="game-development.html" class="nav-link">Games</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+        <div class="hero-content">
+            <h1>🤖 Python Basics - 100 Lessons</h1>
+            <p>Learn programming with Python!</p>
+        </div>
+    </section>
+
+    <!-- Lessons Section -->
+    <section class="lesson-section">
+        <div class="lessons-container">
+            <!-- Sidebar with lesson list -->
+            <div class="lessons-sidebar">
+                <h3>📚 Lessons</h3>
+                <input type="text" id="lessonSearch" placeholder="Search lessons..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;">
+                <div id="lessonsList"></div>
+            </div>
+
+            <!-- Main content area -->
+            <div class="lessons-content">
+                <div id="lessonsContent"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Home -->
+    <section class="back-section">
+        <a href="index.html" class="btn btn-primary">← Back to Home</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kids Code Lab. Made by kids, for kids! 🎉</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const pythonLessons = [
+            { num: 1, title: "What is Python?", content: "Python is a programming language that's easy to learn and powerful. Created in 1991, it's used worldwide for web, data science, AI, and automation. Python reads like English, making it perfect for beginners!" },
+            { num: 2, title: "Installing Python", content: "Download Python from python.org and install. Choose version 3.10 or newer. Windows, Mac, and Linux all supported. Verify installation: open terminal and type 'python --version'. You're ready to code!" },
+            { num: 3, title: "Your First Program", content: "print('Hello, World!') is the classic first program. It displays text on screen. Every programmer's first step! Understanding what print() does opens doors to output." },
+            { num: 4, title: "The Interpreter", content: "Python interpreter reads your code and executes it line by line. Type 'python' in terminal to enter interactive mode. Test code instantly. Interactive mode is great for learning!" },
+            { num: 5, title: "Comments", content: "Comments explain code: # This is a comment. Comments don't execute, they're for humans. Good comments make code understandable. Comment frequently when learning!" },
+            { num: 6, title: "CHALLENGE: Print Your Story", content: "Write a program that prints a short story, poem, or dialogue. Use multiple print statements. Make it creative and fun. Share what you created!", isChallenge: true },
+            { num: 7, title: "Variables", content: "Variables store information: name = 'Alice' or age = 12. Name something, store data in it. Variables make programs flexible. Use descriptive names like 'student_name' not 'x'." },
+            { num: 8, title: "Data Types", content: "Strings: 'text', Numbers: 42 or 3.14, Booleans: True/False, Lists: [1,2,3], Dictionaries: {'name': 'Alice'}. Different types for different data. Understanding types prevents confusion." },
+            { num: 9, title: "String Operations", content: "Combine strings: 'Hello' + ' World'. Repeat: 'Ha' * 3 = 'HaHaHa'. Get length: len('Python') = 6. Access characters: 'Python'[0] = 'P'. Strings are powerful!" },
+            { num: 10, title: "Type Conversion", content: "Convert between types: str(42) = '42', int('42') = 42, float('3.14') = 3.14, bool(1) = True. Necessary when combining different types. Understanding conversion prevents errors." },
+            { num: 11, title: "CHALLENGE: Variables and Strings", content: "Create variables for your name, age, favorite color, favorite food. Print a formatted sentence using these variables. Example: 'My name is Alice and I'm 12 years old.'", isChallenge: true },
+            { num: 12, title: "Input", content: "Get user input: name = input('What is your name? '). Input returns a string. Convert to number: age = int(input('Age? ')). Input makes programs interactive!" },
+            { num: 13, title: "Math Operations", content: "Addition (+), Subtraction (-), Multiplication (*), Division (/), Floor Division (//), Modulo (%), Exponent (**). Operator order matters: * and / before + and -. Math is straightforward in Python." },
+            { num: 14, title: "Comparison Operators", content: "Equal (==), Not Equal (!=), Greater (>), Less (<), Greater or Equal (>=), Less or Equal (<=). Comparisons return True or False. Building blocks for decisions." },
+            { num: 15, title: "Logical Operators", content: "And: both must be true. Or: either can be true. Not: reverses true/false. Combine conditions: if age > 18 and has_license: Logical operators control complex decisions." },
+            { num: 16, title: "CHALLENGE: Interactive Math", content: "Create a program that asks for two numbers. Perform operations: add, subtract, multiply, divide. Display results. Make it clear which operation is which!", isChallenge: true },
+            { num: 17, title: "If Statements", content: "Make decisions: if condition: do_something. Condition must be True. if age >= 13: print('Teenager!'). If statements control program flow based on conditions." },
+            { num: 18, title: "If-Else", content: "if condition: do_this else: do_that. Two paths depending on condition. Essential for branching logic. Most programs use if-else extensively." },
+            { num: 19, title: "If-Elif-Else", content: "Multiple conditions: if x == 1: ... elif x == 2: ... else: ... Cleaner than nested ifs. Handle many cases efficiently. Chain conditions logically." },
+            { num: 20, title: "Nested If", content: "If inside if: if outer: if inner: action. Handles complex logic. Too many levels get confusing. Keep nesting shallow and readable." },
+            { num: 21, title: "CHALLENGE: Decision Tree", content: "Create a program that asks questions and makes decisions based on answers. Example: ask about weather, suggest activity. Multiple branches, clear outcomes!", isChallenge: true },
+            { num: 22, title: "While Loops", content: "Repeat while condition is true: while counter < 10: counter += 1. Loop continues until condition is false. Be careful of infinite loops! While is great for unknown iteration count." },
+            { num: 23, title: "For Loops", content: "Repeat for each item: for i in range(10): print(i). Range generates numbers. For loops are cleaner than while. Preferred for counting and iterating." },
+            { num: 24, title: "Range Function", content: "range(5) = 0,1,2,3,4. range(1,5) = 1,2,3,4. range(0,10,2) = 0,2,4,6,8. Range is powerful for loops. Understanding ranges is essential." },
+            { num: 25, title: "Loop Control: Break and Continue", content: "break exits loop immediately. continue skips to next iteration. Control loop flow precisely. Use sparingly—usually structure loops to avoid them." },
+            { num: 26, title: "CHALLENGE: Loop Practice", content: "Write programs using while and for loops. Print multiplication table, countdown timer, pattern. Combine loops with if statements for complex logic!", isChallenge: true },
+            { num: 27, title: "Lists", content: "Store multiple values: numbers = [1,2,3,4,5]. Access by index: numbers[0] = 1. Lists are mutable (changeable). Lists are fundamental data structure." },
+            { num: 28, title: "List Methods", content: "append() adds item, remove() deletes, pop() removes last, sort() orders, reverse() flips. clear() empties list. Lists have powerful built-in methods." },
+            { num: 29, title: "List Comprehension", content: "Concise way to create lists: squares = [x**2 for x in range(5)]. Filter: even = [x for x in range(10) if x % 2 == 0]. List comprehension is Pythonic and elegant." },
+            { num: 30, title: "Looping Through Lists", content: "for item in list: do_something(item). Easy to iterate. for i, item in enumerate(list): gives index and item. Looping is essential for working with lists." },
+            { num: 31, title: "CHALLENGE: List Operations", content: "Create a list of numbers. Use methods to manipulate: add, remove, sort. Calculate sum, average, max, min. Display formatted results!", isChallenge: true },
+            { num: 32, title: "Tuples", content: "Immutable list: point = (3, 4). Can't change after creation. Used for fixed data. Tuples are useful when you need unchanging data." },
+            { num: 33, title: "Dictionaries", content: "Key-value pairs: person = {'name': 'Alice', 'age': 12}. Access: person['name'] = 'Alice'. Dictionaries organize related data. Very useful data structure." },
+            { num: 34, title: "Dictionary Methods", content: "keys() returns keys, values() returns values, items() returns pairs. get() safely accesses keys. Dictionary methods make manipulation easy." },
+            { num: 35, title: "Nested Structures", content: "Lists in dictionaries, dictionaries in lists. Complex but necessary. students = [{'name': 'Alice', 'grade': 'A'}, ...]. Nesting handles real-world data." },
+            { num: 36, title: "CHALLENGE: Data Structures", content: "Create list of dictionaries (students with name, age, grade). Display, search, sort. Demonstrate understanding of complex data structures!", isChallenge: true },
+            { num: 37, title: "Functions", content: "Reusable code blocks: def greet(name): print(f'Hello {name}'). Avoid repetition. Functions make code organized and maintainable. Essential programming skill." },
+            { num: 38, title: "Parameters and Arguments", content: "Parameters are placeholders: def add(a, b):. Arguments are values passed: add(3, 4). Parameters allow functions to work with different data. Flexible and powerful." },
+            { num: 39, title: "Return Values", content: "Functions return results: def add(a, b): return a + b. Use returned value: result = add(3, 4). Return values make functions useful for calculations." },
+            { num: 40, title: "Default Parameters", content: "def greet(name='Friend'): return f'Hello {name}'. Name defaults to 'Friend' if not provided. Default parameters make functions flexible." },
+            { num: 41, title: "CHALLENGE: Function Writing", content: "Write functions for common tasks: convert temperature, calculate area, validate input. Test with different inputs. Build a library of useful functions!", isChallenge: true },
+            { num: 42, title: "Docstrings", content: "Document functions: def add(a, b): '''Add two numbers.''' Docstrings explain what function does. Good practice, especially in teams. Documentation is important!" },
+            { num: 43, title: "Variable Scope", content: "Global variables accessible everywhere. Local variables only in function. Scope prevents conflicts. Understanding scope prevents hard bugs." },
+            { num: 44, title: "Lambda Functions", content: "Anonymous function: square = lambda x: x**2. One-line functions. Often used with map, filter, sort. Lambda is concise but keep it simple." },
+            { num: 45, title: "Map and Filter", content: "map() applies function to all items: list(map(str, [1,2,3])). filter() keeps matching items: list(filter(lambda x: x > 5, numbers)). Powerful list operations." },
+            { num: 46, title: "CHALLENGE: Advanced Functions", content: "Write functions with multiple parameters, default values, docstrings. Use lambda functions. Use map and filter. Combine for complex operations!", isChallenge: true },
+            { num: 47, title: "Imports and Modules", content: "import math, from math import sqrt, import os. Use code written by others. Modules extend Python's capabilities. Importing is essential for real projects." },
+            { num: 48, title: "Common Modules", content: "math: calculations, random: randomness, datetime: dates/times, os: files/folders, json: data format, requests: web requests. Python's standard library is huge!" },
+            { num: 49, title: "File Reading", content: "with open('file.txt', 'r') as f: content = f.read(). Read entire file or line by line. Files persist data beyond program ending. File I/O is essential." },
+            { num: 50, title: "File Writing", content: "with open('file.txt', 'w') as f: f.write('Hello'). 'w' overwrites, 'a' appends. Save data permanently. File writing completes the cycle." },
+            { num: 51, title: "CHALLENGE: File Operations", content: "Create program that reads data from file, processes it, writes results to new file. Work with text and JSON. Demonstrate file manipulation!", isChallenge: true },
+            { num: 52, title: "Exceptions", content: "Errors happen: ZeroDivisionError, ValueError, FileNotFoundError. Handle gracefully: try: code except Error: handle. Programs crash without exception handling." },
+            { num: 53, title: "Try-Except", content: "try: do_something except ValueError: handle_error. Catch specific errors. Multiple except blocks for different errors. Exception handling is crucial for robustness." },
+            { num: 54, title: "Finally Block", content: "try-except-finally: finally block runs regardless. Close files safely: finally: file.close(). Finally ensures cleanup happens." },
+            { num: 55, title: "Raising Exceptions", content: "raise ValueError('Invalid input'). Create controlled errors. Communicate problems to calling code. Raising exceptions maintains control flow." },
+            { num: 56, title: "CHALLENGE: Error Handling", content: "Write program that processes user input. Handle multiple error types: ValueError, IndexError, etc. Provide helpful error messages. Make program crash-proof!", isChallenge: true },
+            { num: 57, title: "Classes and Objects", content: "Classes define structure: class Dog: pass. Create objects: my_dog = Dog(). OOP organizes complex code. Classes power modern programming." },
+            { num: 58, title: "Attributes and Methods", content: "Attributes store data: self.name. Methods are functions: def bark(self). self refers to the object itself. Attributes and methods define object behavior." },
+            { num: 59, title: "Constructor", content: "def __init__(self, name, age): sets up object. Called when creating object. my_dog = Dog('Buddy', 3). Constructor initializes object state." },
+            { num: 60, title: "Inheritance", content: "class Puppy(Dog): inherits from Dog. Reuse code, specialize behavior. Child classes extend parents. Inheritance reduces code duplication." },
+            { num: 61, title: "CHALLENGE: Create Classes", content: "Design class for something you like: Animal, Car, Game. Include attributes and methods. Create objects and use them. Demonstrate OOP understanding!", isChallenge: true },
+            { num: 62, title: "Static Methods", content: "@staticmethod: function that doesn't need self. Useful for utilities. Dog.bark_sound() = 'Woof'. Static methods organize related code." },
+            { num: 63, title: "Class Variables", content: "Shared by all objects: Dog.species = 'Canis'. Instance variables unique per object: self.name. Distinguish between shared and individual data." },
+            { num: 64, title: "Magic Methods", content: "__str__() for printing, __len__() for length, __add__() for +. Control object behavior. Magic methods make objects feel natural." },
+            { num: 65, title: "Polymorphism", content: "Different objects same method: dog.speak(), cat.speak(). Different responses. Allows generic code. Polymorphism is powerful OOP feature." },
+            { num: 66, title: "CHALLENGE: OOP Design", content: "Design class hierarchy: Animal parent with Dog, Cat, Bird children. Each has unique methods. Create objects and call methods. Show polymorphism!", isChallenge: true },
+            { num: 67, title: "List Slicing", content: "Get portion of list: numbers[1:4] = [2,3,4]. Start:end, negative indices work from end. Slicing is powerful for extracting data." },
+            { num: 68, title: "String Slicing", content: "Strings support slicing: 'Python'[1:4] = 'yth'. Same rules as lists. Strings are sequences. Slicing works on any sequence." },
+            { num: 69, title: "Unpacking", content: "Get multiple values: a, b, c = [1,2,3]. Assign list to variables in one line. Useful for multiple returns. Unpacking is concise." },
+            { num: 70, title: "Zip and Enumerate", content: "zip combines lists: zip([1,2], ['a','b']) = (1,'a'), (2,'b'). enumerate adds index: (0, 'a'), (1, 'b'). Both incredibly useful in loops." },
+            { num: 71, title: "CHALLENGE: Working with Sequences", content: "Write programs using slicing, unpacking, zip, enumerate. Parse complex data. Sort, filter, transform. Demonstrate sequence mastery!", isChallenge: true },
+            { num: 72, title: "Set Data Structure", content: "Unordered, unique values: {1,2,3}. No duplicates. Operations: union (|), intersection (&), difference (-). Sets are efficient for membership testing." },
+            { num: 73, title: "Frozenset", content: "Immutable set: frozenset([1,2,3]). Can be dictionary key unlike set. Use when you need unchanging set. Rare but useful." },
+            { num: 74, title: "JSON Serialization", content: "json.dumps() converts to JSON string, json.loads() parses JSON. Save structured data. API communication uses JSON. JSON is universal format." },
+            { num: 75, title: "Regular Expressions", content: "Match patterns: import re, re.search(r'\\d+', text). Powerful text processing. Validate email, extract data, replace patterns. Regex is complex but powerful." },
+            { num: 76, title: "CHALLENGE: Advanced Data Handling", content: "Work with sets, JSON files, regular expressions. Parse complex text data. Build data processing pipeline. Show advanced skills!", isChallenge: true },
+            { num: 77, title: "List Sorting", content: "sort() modifies list, sorted() returns new. Key function for custom sort: sorted(students, key=lambda s: s['grade']). Control sort order. Sorting is essential." },
+            { num: 78, title: "Sorting Complexity", content: "Big O notation describes efficiency. Python's sort is O(n log n). For small lists, doesn't matter. Efficiency matters for large data. Understand algorithm complexity." },
+            { num: 79, title: "Searching and Finding", content: "index() finds position, in checks membership, count() counts occurrences. Use efficiently. Linear search is O(n), binary search is O(log n). Choose right search." },
+            { num: 80, title: "Performance Tips", content: "List comprehension faster than loops. Generators for large data. Cache results. Profile before optimizing. Python is slower but good for learning. Optimize when necessary." },
+            { num: 81, title: "CHALLENGE: Performance Project", content: "Write program doing lots of operations: sort large list, search, process data. Measure time. Optimize. Demonstrate performance awareness!", isChallenge: true },
+            { num: 82, title: "Decorators", content: "@decorator modifies functions. @staticmethod, @classmethod are built-in. Create custom decorators for logging, timing, validation. Decorators extend function behavior." },
+            { num: 83, title: "Generators", content: "def counter(): yield 1; yield 2. Memory efficient for large sequences. Lazy evaluation. Generators power Python's elegance. Advanced but powerful." },
+            { num: 84, title: "Context Managers", content: "with statement manages setup/cleanup: with open(file) as f:. Ensures cleanup even if error. Safe resource handling. With statement is Pythonic." },
+            { num: 85, title: "Metaclasses", content: "Classes that create classes. Very advanced. Usually unnecessary. Understanding when NOT to use them is more important than using them." },
+            { num: 86, title: "CHALLENGE: Advanced Python", content: "Use decorators, generators, context managers. Write elegant, Pythonic code. Create reusable, beautiful solutions. Show mastery!", isChallenge: true },
+            { num: 87, title: "Virtual Environments", content: "venv isolates project dependencies: python -m venv venv. Activate environment. Install packages locally. Professional development requires virtual environments." },
+            { num: 88, title: "Package Management: pip", content: "pip install package_name downloads and installs. pip install -r requirements.txt. Manage dependencies professionally. Package management is essential." },
+            { num: 89, title: "Creating Packages", content: "Organize code in folders with __init__.py. Share on PyPI. Others can pip install your code. Creating packages is final step to pro developer." },
+            { num: 90, title: "Testing", content: "Write tests to verify code works. unittest, pytest frameworks. Test-driven development. Good tests catch bugs early. Testing is professional practice." },
+            { num: 91, title: "CHALLENGE: Professional Project", content: "Create project with virtual env, requirements.txt, organized code, tests. Document with docstrings. Share on GitHub. Be professional!", isChallenge: true },
+            { num: 92, title: "Web Development: Flask", content: "Flask creates web applications. Routes map URLs to functions. Template rendering. Database integration. Flask is Python's popular web framework." },
+            { num: 93, title: "Web Development: Django", content: "Django is full-featured framework. ORM for databases, admin panel, forms, authentication. More complex than Flask. Django for bigger projects." },
+            { num: 94, title: "Data Science: Pandas", content: "Pandas handles data: DataFrames for tables, Series for columns. Load CSV, manipulate, analyze. Data science foundation in Python. Very popular!" },
+            { num: 95, title: "CHALLENGE: Python Web or Data Project", content: "Build Flask app or Pandas data analysis. Connect to database or analyze real data. Deploy or share results. Show full-stack capability!", isChallenge: true },
+            { num: 96, title: "Machine Learning Basics", content: "scikit-learn for ML algorithms. Predict patterns in data. Train on data, test accuracy. ML brings AI to life. Python dominates ML." },
+            { num: 97, title: "Automation", content: "Python automates tasks: file operations, web scraping, scheduling. selenium for browser automation. Automate your life! Scripting is Python strength." },
+            { num: 98, title: "Your Python Journey", content: "You've learned Python fundamentals. Practice with projects. Explore frameworks. Join communities. Keep learning—Python grows with you." },
+            { num: 99, title: "Next Steps", content: "Contribute to open source, build portfolio projects, attend meetups, participate in competitions. Professional development requires continuous learning. You're on the right path!" },
+            { num: 100, title: "FINAL CHALLENGE: Your Python Masterpiece", content: "Build complete Python project: web app, data analysis, automation tool, game, whatever interests you! Polish it. Document it. Share it. You're now a Python programmer!", isChallenge: true }
+        ];
+
+        let currentLesson = 1;
+
+        function initLessons() {
+            renderLessonList();
+            loadLesson(1);
+        }
+
+        function renderLessonList() {
+            const list = document.getElementById('lessonsList');
+            list.innerHTML = pythonLessons.map(lesson => 
+                `<div class="lesson-item ${lesson.num === currentLesson ? 'active' : ''} ${lesson.isChallenge ? 'challenge-lesson' : ''}" 
+                      onclick="loadLesson(${lesson.num})" style="padding-left: 1rem;">
+                    ${lesson.isChallenge ? '⭐' : '🐍'} Lesson ${lesson.num}
+                </div>`
+            ).join('');
+        }
+
+        function loadLesson(num) {
+            currentLesson = num;
+            const lesson = pythonLessons[num - 1];
+            const content = document.getElementById('lessonsContent');
+            
+            content.innerHTML = `
+                <div class="lesson">
+                    <h2>${lesson.isChallenge ? '⭐ CHALLENGE: ' : '🐍 Lesson '}${lesson.num}: ${lesson.title}</h2>
+                    <div class="lesson-content">
+                        <p>${lesson.content}</p>
+                        ${lesson.isChallenge ? `
+                            <div style="margin-top: 2rem; padding: 1.5rem; background: #FFE5B4; border-radius: 10px; border-left: 4px solid #FFB84D;">
+                                <h4 style="color: #FF9800; margin-top: 0;">⭐ Challenge Time!</h4>
+                                <p>${lesson.content}</p>
+                                <button class="btn btn-primary" onclick="alert('Excellent! You completed the challenge. Share your code on GitHub. Every project makes you a better programmer!')">Mark Complete</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: space-between;">
+                        ${num > 1 ? `<button class="btn btn-small" onclick="loadLesson(${num - 1})">← Previous</button>` : '<div></div>'}
+                        <span style="align-self: center;">Lesson ${num} of ${pythonLessons.length}</span>
+                        ${num < pythonLessons.length ? `<button class="btn btn-small" onclick="loadLesson(${num + 1})">Next →</button>` : '<div></div>'}
+                    </div>
+                </div>
+            `;
+
+            renderLessonList();
+            document.querySelector('.lessons-sidebar').scrollTop = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', initLessons);
+    </script>
+</body>
+</html>
